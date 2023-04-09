@@ -6,6 +6,8 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class ArticleType extends AbstractType
 {
@@ -16,7 +18,11 @@ class ArticleType extends AbstractType
             ->add('dateArticle')
             ->add('contentArticle')
             ->add('nbrlikesArticle')
-            ->add('imageArticle')
+            ->add('imageArticle', FileType::class, [
+                'label' => 'Upload Image',
+                'mapped' => false,
+                'required' => false,
+            ])
             ->add('categoryArticle')
             ->add('iduser')
         ;

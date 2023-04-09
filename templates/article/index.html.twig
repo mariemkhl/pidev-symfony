@@ -3,80 +3,34 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
+    <h1> </h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdArticle</th>
-                <th>TitreArticle</th>
-                <th>DateArticle</th>
-                <th>ContentArticle</th>
-                <th>NbrlikesArticle</th>
-                <th>ImageArticle</th>
-                <th>CategoryArticle</th>
-                <th>Iduser</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <style>
+        .card:hover {
+            box-shadow: 0px 0px 10px #888;
+        }
+    </style>
+
+    <div class="card-columns">
         {% for article in articles %}
-            <tr>
-                <td>{{ article.idArticle }}</td>
-                <td>{{ article.titreArticle }}</td>
-                <td>{{ article.dateArticle ? article.dateArticle|date('Y-m-d') : '' }}</td>
-                <td>{{ article.contentArticle }}</td>
-                <td>{{ article.nbrlikesArticle }}</td>
-                <td>{{ article.imageArticle }}</td>
-                <td>{{ article.categoryArticle }}</td>
-                <td>{{ article.iduser }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'idArticle': article.idArticle}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="card">
+                <img src="{{asset('uploads/images/' ~ article.imageArticle)}}" class="card-img-top" alt="{{ article.titreArticle }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.titreArticle }}</h5>
+                    <p class="card-text">{{ article.contentArticle }}</p>
+                    <a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="btn btn-primary">Read more</a>
+                    <a href="{{ path('app_article_edit', {'idArticle': article.idArticle}) }}" class="btn btn-secondary">Edit</a>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">No records found.</p>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('app_article_new') }}">Create new</a>
+    <a href="{{ path('app_article_new') }}" class="btn btn-primary">Create new</a>
+
 {% endblock %}
