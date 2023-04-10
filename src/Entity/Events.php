@@ -4,24 +4,31 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\EventsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: EventsRepository::class)]
-
-
+/**
+ * Events
+ *
+ * @ORM\Table(name="events")
+ * @ORM\Entity(repositoryClass="App\Repository\EventsRepository")
+ */
 class Events
 {
-    #[ORM\Id]  
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idEvent= null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_event", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEvent;
 
-    
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"le champ est vide!")]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nameEv", type="string", length=255, nullable=false)
+     */
     private $nameev;
 
     /**
@@ -31,29 +38,40 @@ class Events
      */
     private $dateEvent;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"le champ est vide!")]
-    private ?string $location = null ;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     */
+    private $location;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_user", type="integer", nullable=false)
+     */
+    private $idUser;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="categorie", type="string", length=255, nullable=false)
+     */
+    private $categorie;
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $idUser = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbplacetotal", type="integer", nullable=false)
+     */
+    private $nbplacetotal;
 
-    
-    
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"le champ est vide!")]
-    private ?string $categorie;
-
-    #[ORM\Column]
-    #[Assert\NotBlank (message:"le champ est vide!")]
-    private ?int $nbplacetotal = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"le champ est vide!")]
-    private ?int $img = null ;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="img", type="string", length=255, nullable=false)
+     */
+    private $img;
 
     #[ORM\OneToMany(mappedBy: 'idEvent', targetEntity: Reservations::class)]
     private Collection $reservation;
@@ -63,11 +81,14 @@ class Events
         $this->reservation = new ArrayCollection();
     }
 
-
+/**
+     * @return Collection<int, Reservations>
+     */
  public function getReservation(): Collection
     {
         return $this->reservation;
     }
+
     public function getIdEvent(): ?int
     {
         return $this->idEvent;
@@ -157,35 +178,5 @@ class Events
         return $this;
     }
 
-    public function __toString() {
-        return $this->idEvent;
-    }
-
-    /**
-     * @return Collection<int, Student>
-     */
-   
-
-   public function add(Reservations $reservation): self
-    {
-        if (!$this->reservation->contains($reservation)) {
-            $this->reservation->add($reservation);
-            $reservation->setIdEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservation(Reservations $reservation): self
-    {
-        if ($this->reservation->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getIdEvent() === $this) {
-                $reservation->setIdEvent(null);
-            }
-        }
-
-        return $this;
-    }
 
 }

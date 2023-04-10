@@ -1,0 +1,30 @@
+{% extends 'events.html.twig' %}
+
+{% block title %}Hello EventFrontController!{% endblock %}
+
+{% block body %}
+<div class="latest-news mt-150 mb-150">
+		<div class="container">
+        {%for event in events %}
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-1"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">{{event.nameev}}</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> {{event.location}}</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{event.DateEvent}}</span>
+								<span class="dt"><i class="fas fa-calendar"></i> {{event.Nbplacetotal}}</span>
+							</p>
+							<p class="excerpt">{{event.Location}}</p>
+							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+                </div>
+                </div>
+                {%endfor%}
+                </div>
+
+{% endblock %}

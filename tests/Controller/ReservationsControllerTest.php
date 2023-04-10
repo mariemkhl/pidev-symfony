@@ -44,8 +44,6 @@ class ReservationsControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'reservation[idEvent]' => 'Testing',
-            'reservation[idUser]' => 'Testing',
             'reservation[name]' => 'Testing',
             'reservation[datere]' => 'Testing',
         ]);
@@ -59,8 +57,6 @@ class ReservationsControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new Reservations();
-        $fixture->setIdEvent('My Title');
-        $fixture->setIdUser('My Title');
         $fixture->setName('My Title');
         $fixture->setDatere('My Title');
 
@@ -78,8 +74,6 @@ class ReservationsControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new Reservations();
-        $fixture->setIdEvent('My Title');
-        $fixture->setIdUser('My Title');
         $fixture->setName('My Title');
         $fixture->setDatere('My Title');
 
@@ -88,8 +82,6 @@ class ReservationsControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'reservation[idEvent]' => 'Something New',
-            'reservation[idUser]' => 'Something New',
             'reservation[name]' => 'Something New',
             'reservation[datere]' => 'Something New',
         ]);
@@ -98,8 +90,6 @@ class ReservationsControllerTest extends WebTestCase
 
         $fixture = $this->repository->findAll();
 
-        self::assertSame('Something New', $fixture[0]->getIdEvent());
-        self::assertSame('Something New', $fixture[0]->getIdUser());
         self::assertSame('Something New', $fixture[0]->getName());
         self::assertSame('Something New', $fixture[0]->getDatere());
     }
@@ -111,8 +101,6 @@ class ReservationsControllerTest extends WebTestCase
         $originalNumObjectsInRepository = count($this->repository->findAll());
 
         $fixture = new Reservations();
-        $fixture->setIdEvent('My Title');
-        $fixture->setIdUser('My Title');
         $fixture->setName('My Title');
         $fixture->setDatere('My Title');
 

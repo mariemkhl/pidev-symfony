@@ -9,8 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType ;
-
 
 #[Route('/events')]
 class EventsController extends AbstractController
@@ -22,7 +20,6 @@ class EventsController extends AbstractController
             'events' => $eventsRepository->findAll(),
         ]);
     }
-
 
     #[Route('/new', name: 'app_events_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventsRepository $eventsRepository): Response

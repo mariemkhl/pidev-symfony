@@ -4,19 +4,23 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\ReservationsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: ReservationsRepository::class)]
-
+/**
+ * Reservations
+ *
+ * @ORM\Table(name="reservations")
+ * @ORM\Entity(repositoryClass="App\Repository\ReservationsRepository")
+ */
 class Reservations
 {
-    #[ORM\Id]  
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idRes = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_res", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idRes;
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?Events $idEvent = null;
@@ -24,11 +28,13 @@ class Reservations
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $idUser = null;
-    
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"le champ est vide!")]
-    private ?string $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
 
     /**
      * @var \DateTime
@@ -37,14 +43,12 @@ class Reservations
      */
     private $datere;
 
-
-
     public function getIdRes(): ?int
     {
         return $this->idRes;
     }
 
-  public function getIdEvent(): ?Events
+    public function getIdEvent(): ?Events
     {
         return $this->idEvent;
     }
@@ -55,7 +59,7 @@ class Reservations
 
         return $this;
     }
-
+   
     public function getIdUser(): ?Utilisateur
     {
         return $this->idUser;

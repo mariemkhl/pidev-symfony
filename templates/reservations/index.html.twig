@@ -9,8 +9,6 @@
         <thead>
             <tr>
                 <th>IdRes</th>
-                <th>IdEvent</th>
-                <th>IdUser</th>
                 <th>Name</th>
                 <th>Datere</th>
                 <th>actions</th>
@@ -20,8 +18,6 @@
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.idRes }}</td>
-                <td>{{ reservation.idEvent }}</td>
-                <td>{{ reservation.idUser }}</td>
                 <td>{{ reservation.name }}</td>
                 <td>{{ reservation.datere ? reservation.datere|date('Y-m-d') : '' }}</td>
                 <td>
@@ -31,7 +27,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
