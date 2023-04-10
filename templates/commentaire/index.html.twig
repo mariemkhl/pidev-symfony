@@ -3,43 +3,46 @@
 {% block title %}Commentaire index{% endblock %}
 
 {% block body %}
-    <h1>Commentaire index</h1>
+    <h3>Comments</h3>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdCommentaire</th>
-                <th>IdArticle</th>
-                <th>ContentCommentaire</th>
-                <th>DateCommentaire</th>
-                <th>NbLikesCommentaire</th>
-                <th>EtatCommentaire</th>
-                <th>IdUser</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="row">
         {% for commentaire in commentaires %}
-            <tr>
-                <td>{{ commentaire.idCommentaire }}</td>
-                <td>{{ commentaire.idArticle }}</td>
-                <td>{{ commentaire.contentCommentaire }}</td>
-                <td>{{ commentaire.dateCommentaire ? commentaire.dateCommentaire|date('Y-m-d') : '' }}</td>
-                <td>{{ commentaire.nbLikesCommentaire }}</td>
-                <td>{{ commentaire.etatCommentaire ? 'Yes' : 'No' }}</td>
-                <td>{{ commentaire.idUser }}</td>
-                <td>
-                    <a href="{{ path('app_commentaire_show', {'idCommentaire': commentaire.idCommentaire}) }}">show</a>
-                    <a href="{{ path('app_commentaire_edit', {'idCommentaire': commentaire.idCommentaire}) }}">edit</a>
-                </td>
-            </tr>
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ commentaire.idUser }}</h5>
+                    <p class="card-text">{{ commentaire.contentCommentaire }}</p>
+                    <p class="card-text"><small class="text-muted">{{ commentaire.dateCommentaire ? commentaire.dateCommentaire|date('Y-m-d H:i:s') : '' }}</small></p>
+                    <a href="{{ path('app_commentaire_show', {'idCommentaire': commentaire.idCommentaire}) }}" class="card-link">Show</a>
+                    <a href="{{ path('app_commentaire_edit', {'idCommentaire': commentaire.idCommentaire}) }}" class="card-link">Edit</a>
+                </div>
+            </div>
+        </div>
         {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+        <div class="col-md-8 offset-md-2">
+            <p>No comments yet. Be the first to leave a comment!</p>
+        </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('app_commentaire_new') }}">Create new</a>
+    <div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h4>Leave a comment</h4>
+        {{ form_start(form) }}
+       
+        <div class="form-group row">
+            {{ form_label(form.contentCommentaire, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.contentCommentaire, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-9 offset-md-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
 {% endblock %}

@@ -50,6 +50,7 @@ class Commentaire
      *
      * @ORM\Column(name="nb_likes_commentaire", type="integer", nullable=false)
      */
+    
     private $nbLikesCommentaire;
 
     /**
@@ -66,6 +67,7 @@ class Commentaire
      * @ORM\ManyToOne(targetEntity="App\Entity\utilisateur", inversedBy="commentaires")
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
      */
+
     private $idUser;
 
     

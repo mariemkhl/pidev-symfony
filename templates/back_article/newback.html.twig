@@ -1,0 +1,70 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block body %}
+    <h1 class="font-italic text-center">Create New Article</h1>
+
+    
+
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 15px;
+        }
+
+        .custom-file-upload {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    {% for error in form.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+
+                    {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.titreArticle, 'Title') }}
+                            {{ form_widget(form.titreArticle, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                            <div class="form-group">
+                                {{ form_label(form.dateArticle, 'Date') }}
+                                {{ form_widget(form.dateArticle, { 'attr': {'class': 'form-control', 'id': 'dateArticle'} }) }}
+                            </div>
+
+
+                        <div class="form-group">
+                            {{ form_label(form.contentArticle, 'Content') }}
+                            {{ form_widget(form.contentArticle, { 'attr': {'class': 'form-control', 'rows': '10'} }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.imageArticle, 'Upload Image', {'label_attr': {'class': 'custom-file-upload'}}) }}
+                            {{ form_widget(form.imageArticle, { 'attr': {'class': 'form-control-file'} }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.categoryArticle, 'Category') }}
+                            {{ form_widget(form.categoryArticle, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+{% endblock %}

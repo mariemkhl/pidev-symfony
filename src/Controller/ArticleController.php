@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -16,10 +18,15 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
+        
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
         ]);
+        
     }
+
+
+
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response
     {
@@ -59,12 +66,11 @@ class ArticleController extends AbstractController
     #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article): Response
     {
-
         return $this->render('article/show.html.twig', [
             'article' => $article,
-
         ]);
     }
+    
 
     #[Route('/{idArticle}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
 public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
@@ -110,4 +116,8 @@ public function edit(Request $request, Article $article, ArticleRepository $arti
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
+
+  
+
+
 }

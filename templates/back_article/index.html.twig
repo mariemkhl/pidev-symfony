@@ -1,0 +1,60 @@
+{% extends 'back.html.twig' %}
+
+{% block body %}
+<style> 
+.article-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* This will crop the image if it's not the same aspect ratio as the container */
+}
+
+</style>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <h1>Articles</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Content</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td>{{ article.idArticle }}</td>
+                                <td>  <img src="{{ asset('uploads/images/' ~ article.imageArticle) }}" class="article-image img-fluid" alt="{{ article.titreArticle }}"></td>
+                                <td>{{ article.titreArticle }}</td>
+                                <td>{{ article.contentArticle }}</td>
+                                <td>
+                                    
+                                    <a href="{{ path('app_article_editback', {'idArticle': article.idArticle}) }}" class="btn btn-secondary btn-sm btn-block">Edit </a>
+
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">No records found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+<div class="d-flex justify-content-between">
+
+   <a href="{{ path('app_comment_index') }}" class="btn btn-info">Comments</a>
+    <a href="{{ path('app_article_newback') }}" class="btn btn-primary">New Article</a>
+</div>
+
+            <div class="d-flex justify-content-center my-4">
+                {{ knp_pagination_render(articles) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -15,8 +15,8 @@ class CommentaireType extends AbstractType
             ->add('idArticle')
             ->add('contentCommentaire')
             ->add('dateCommentaire')
-            ->add('nbLikesCommentaire')
-            ->add('etatCommentaire')
+            //->add('nbLikesCommentaire')
+           // ->add('etatCommentaire')
             ->add('idUser')
         ;
     }

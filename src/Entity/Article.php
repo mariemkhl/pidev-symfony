@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -27,6 +28,7 @@ class Article
      * @var string|null
      *
      * @ORM\Column(name="titre_article", type="string", length=255, nullable=true)
+     * 
      */
     private $titreArticle;
 
@@ -38,6 +40,7 @@ class Article
     private $dateArticle;
 
     /**
+     * @Assert\NotBlank(message="Le contenu ne peut pas être vide")
      * @var string
      *
      * @ORM\Column(name="content_article", type="string", length=255, nullable=false)

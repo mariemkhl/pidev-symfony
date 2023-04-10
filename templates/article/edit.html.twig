@@ -1,13 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Article{% endblock %}
+{% block title %}
+    {% if article.idArticle is not null %}
+        Edit Article {{ article.idArticle }}
+    {% else %}
+        Create New Article
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Article</h1>
+    <div class="container">
+        <h1 class="my-5">{% if article.idArticle is not null %}Edit Article{% else %}Create New Article{% endif %}</h1>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.titreArticle) }}
+                    {{ form_widget(form.titreArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contentArticle) }}
+                    {{ form_widget(form.contentArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {% if article.imageArticle %}
+                        <img src="{{ asset('uploads/' ~ article.imageArticle) }}" alt="Article Image" class="img-thumbnail">
+                    {% endif %}
+                    {{ form_label(form.imageArticle) }}
+                    {{ form_widget(form.imageArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form) }}
+        <div class="my-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+        {{ form_end(form) }}
 
-    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+        {% if article.idArticle is not null %}
+            {{ include('article/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
 {% endblock %}

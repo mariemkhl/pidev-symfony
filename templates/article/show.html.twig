@@ -9,9 +9,9 @@
 				<div class="col-lg-8">
 					<div class="single-article-section">
 						<div class="single-article-text">
-							<img src="{{asset('uploads/images/' ~ article.imageArticle)}}" class="card-img-top" alt="{{ article.titreArticle }}">
+							<img src="{{ asset('uploads/images/' ~ article.imageArticle) }}">
 
-							<p class="blog-meta">
+                            <p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i> Admin</span>
 								<span class="date"><i class="fas fa-calendar"></i>  {{ article.dateArticle ? article.dateArticle|date('Y-m-d') : '' }}</span>
 							</p>

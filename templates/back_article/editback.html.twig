@@ -1,0 +1,51 @@
+{% extends 'back.html.twig' %}
+
+
+{% block title %}
+    {% if article.idArticle is not null %}
+        Edit Article {{ article.idArticle }}
+    {% else %}
+        Create New Article
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-5">{% if article.idArticle is not null %}Edit Article{% else %}Create New Article{% endif %}</h1>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.titreArticle) }}
+                    {{ form_widget(form.titreArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contentArticle) }}
+                    {{ form_widget(form.contentArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {% if article.imageArticle %}
+                        <img src="{{ asset('uploads/' ~ article.imageArticle) }}" alt="Article Image" class="img-thumbnail">
+                    {% endif %}
+                    {{ form_label(form.imageArticle) }}
+                    {{ form_widget(form.imageArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form) }}
+        <div class="my-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            
+        </div>
+        {{ form_end(form) }}
+
+    
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+{% endblock %}
