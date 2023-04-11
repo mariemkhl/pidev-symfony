@@ -1,0 +1,57 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}
+    {% if commentaire.idCommentaire is not null %}
+        Edit Commentaire {{ commentaire.idCommentaire }}
+    {% else %}
+        Create New Commentaire
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-5">{% if commentaire.idCommentaire is not null %}Edit Commentaire{% else %}Create New Commentaire{% endif %}</h1>
+        {{ form_start(form, {'action': path('app_back_commentaire', {'idCommentaire': commentaire.idCommentaire}), 'method': 'POST'}) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.idArticle) }}
+                    {{ form_widget(form.idArticle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contentCommentaire) }}
+                    {{ form_widget(form.contentCommentaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.dateCommentaire) }}
+                    {{ form_widget(form.dateCommentaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.nbLikesCommentaire) }}
+                    {{ form_widget(form.nbLikesCommentaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.etatCommentaire) }}
+                    {{ form_widget(form.etatCommentaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.idUser) }}
+                    {{ form_widget(form.idUser, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form) }}
+        <div class="my-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Save Changes') }}</button>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+{% endblock %}

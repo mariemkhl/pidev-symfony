@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 
 
 
@@ -32,7 +34,15 @@ class ArticleType extends AbstractType
         
         
             ->add('dateArticle')
-            ->add('contentArticle')
+            ->add('contentArticle', TextareaType::class, [
+                'label' => 'Contenu de l\'article',
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le contenu ne peut pas être vide',
+                    ]),
+                ],
+            ])
            // ->add('nbrlikesArticle')
             ->add('imageArticle', FileType::class, [
                 'label' => 'Upload Image',

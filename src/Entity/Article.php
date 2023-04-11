@@ -40,7 +40,7 @@ class Article
     private $dateArticle;
 
     /**
-     * @Assert\NotBlank(message="Le contenu ne peut pas être vide")
+     *@Assert\NotBlank(message="Le contenu ne peut pas être vide")
      * @var string
      *
      * @ORM\Column(name="content_article", type="string", length=255, nullable=false)

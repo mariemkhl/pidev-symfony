@@ -1,20 +1,47 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello BackCommentaireController!{% endblock %}
+{% extends 'back.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h3></h3>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commentaire in commentaires %}
+                <tr>
+                    <td>{{ commentaire.idCommentaire }}</td>
+                    <td>{{ commentaire.idUser }}</td>
+                    <td>{{ commentaire.contentCommentaire }}</td>
+                    <td>{{ commentaire.dateCommentaire ? commentaire.dateCommentaire|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                       
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/symfony-artisty/src/Controller/BackCommentaireController.php'|file_link(0) }}">src/Controller/BackCommentaireController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/symfony-artisty/templates/back_commentaire/index.html.twig'|file_link(0) }}">templates/back_commentaire/index.html.twig</a></code></li>
-    </ul>
-</div>
+                    </td>
+                         
+                            <td>
+                          <form method="POST" action="{{ path('app_commentaire_delete', {'idCommentaire': commentaire.idCommentaire}) }}" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.idCommentaire) }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No comments yet. Be the first to leave a comment!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}
