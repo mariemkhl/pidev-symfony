@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProdCollect index{% endblock %}
+
+{% block body %}
+    <h1>ProdCollect index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prod_id</th>
+                <th>Prod_nom</th>
+                <th>Img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prod_collect in prod_collects %}
+            <tr>
+                <td>{{ prod_collect.id }}</td>
+                <td>{{ prod_collect.nom }}</td>
+                <td>{{ prod_collect.ProdId }}</td>
+                <td>{{ prod_collect.ProdNom }}</td>
+                <td>{{ prod_collect.img }}</td>
+                <td>
+                    <a href="{{ path('app_prod_collect_show', {'id': prod_collect.id}) }}">show</a>
+                    <a href="{{ path('app_prod_collect_edit', {'id': prod_collect.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prod_collect_new') }}">Create new</a>
+{% endblock %}

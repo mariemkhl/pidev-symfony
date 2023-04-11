@@ -1,0 +1,99 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Category AddForm{% endblock %}
+
+	{% block body %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{{ asset('img/icons/icon-48x48.png') }}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-up.html" />
+
+	<title>Sign Up | AdminKit Demo</title>
+
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<main class="d-flex w-100">
+		<div class="container d-flex flex-column">
+			<div class="row vh-100">
+				<div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+					<div class="d-table-cell align-middle">
+
+						<div class="text-center mt-4">
+							<h1 class="h2">Category</h1>
+							<p class="lead">
+								Start creating new categories for you customers.
+							</p>
+						</div>
+
+						<div class="card">
+							<div class="card-body">
+								<div class="m-sm-4">
+
+
+{{ form_start(form, {'attr': {'class': 'container', 'novalidate': 'novalidate'}, 'method': 'POST', 'action': path('catformAdmin')}) }}
+     {# {{ form_start(form, {'attr': {'class': 'container'}, 'method': 'POST', 'action': path('catformAdmin')}) }} #}
+
+    <div class="mb-3">
+        {# {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}  #}
+		{{ form_row(form.nom) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="mb-3">
+        {# {{ form_label(form.img) }}
+        {{ form_widget(form.img) }}  #}
+		{{ form_row(form.img) }}
+        {{ form_errors(form.img) }}
+        <small class="form-text text-muted">{{ form_help(form.img) }}</small>
+    </div>
+
+{{ form_rest(form) }}
+
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-lg btn-success">Save</button>
+    </div>
+
+    {{ form_end(form) }}
+
+
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+  
+
+	<script src="{{ asset('js/app.js') }}"></script>
+
+</body>
+
+</html>
+{% endblock %}

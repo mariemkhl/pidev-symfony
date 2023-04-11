@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProdCollect{% endblock %}
+
+{% block body %}
+    <h1>ProdCollect</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prod_collect.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ prod_collect.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prod_id</th>
+                <td>{{ prod_collect.ProdId }}</td>
+            </tr>
+            <tr>
+                <th>Prod_nom</th>
+                <td>{{ prod_collect.ProdNom }}</td>
+            </tr>
+            <tr>
+                <th>Img</th>
+                <td>{{ prod_collect.img }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prod_collect_index') }}">back to list</a>
+
+    <a href="{{ path('app_prod_collect_edit', {'id': prod_collect.id}) }}">edit</a>
+
+    {{ include('prod_collect/_delete_form.html.twig') }}
+{% endblock %}
