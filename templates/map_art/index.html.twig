@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+    .main-menu-wrap {
+  background-color: #b4e6ff;
+    }
+    .site-logo{
+        padding :0px;
+    }
+        #maCarte{
+            height: 400px;
+            width: 800px;
+            position: absolute;
+            left: 500px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="maCarte"></div>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <script>
+            var tableauMarqueurs = [];
+
+            var carte = L.map('maCarte').setView([48.852969, 2.349903], 6);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                minZoom: 1,
+                maxZoom: 20
+            }).addTo(carte);
+
+            var marqueurs = L.markerClusterGroup();
+
+            var icone = L.icon({
+                iconUrl: "{{ asset('marker.png') }}",
+                iconSize: [50, 50],
+                iconAnchor: [25, 50],
+                popupAnchor: [0, -50]
+            })
+
+            carte.on('click', mapClickListen);
+
+            function mapClickListen(e) {
+                pos = e.latlng
+                addMarker(pos)
+            }
+
+            function addMarker(pos){
+                if (marqueur != undefined) {
+                    carte.removeLayer(marqueur);
+                }
+                var marqueur = L.marker(pos, {icon: icone});
+
+                marqueurs.addLayer(marqueur);
+
+                tableauMarqueurs.push(marqueur);
+
+                var groupe = new L.featureGroup(tableauMarqueurs);
+                for (mark in tableauMarqueurs){
+                    carte.addLayer(marqueur);
+                    document.querySelector("#lat").value=pos.lat
+                    document.querySelector("#lon").value=pos.lng
+                }
+            }
+                   </script>
+               {% endblock %}
+               {% endblock %}
+
+
+
+
+
+

@@ -1,0 +1,396 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	{% block title %}About{% endblock %}
+
+	<!-- favicon -->
+	
+	
+	
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+	.titre{
+		top:90px;
+     margin-top:40px;
+			margin-bottom:40px;
+	   position:relative;
+
+
+	}
+.formulaire{
+         top:150px;
+			left:20px;
+			width: 300px;
+			float: left;
+			position: relative;
+			
+
+}
+
+	
+	.site-logo{
+		padding:2px;
+	}
+        #maCarte{
+			
+            height: 600px;
+            width: 800px;
+            position: relative;
+			top:100px;
+			left:70px;
+            margin-bottom: 100px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="index.html">
+								<img src="{{asset('assets/img/logo artisty 1.png')}}" width="25%" height="25%"  alt="">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li class="current-list-item"><a href="#">Home</a>
+									<ul class="sub-menu">
+										<li><a href="index.html">Static Home</a></li>
+										<li><a href="index_2.html">Slider Home</a></li>
+									</ul>
+								</li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="#">Pages</a>
+									<ul class="sub-menu">
+										<li><a href="404.html">404 page</a></li>
+										<li><a href="about.html">About</a></li>
+										<li><a href="cart.html">Cart</a></li>
+										<li><a href="checkout.html">Check Out</a></li>
+										<li><a href="contact.html">Contact</a></li>
+										<li><a href="news.html">News</a></li>
+										<li><a href="shop.html">Shop</a></li>
+									</ul>
+								</li>
+								<li><a href="news.html">News</a>
+									<ul class="sub-menu">
+										<li><a href="news.html">News</a></li>
+										<li><a href="single-news.html">Single News</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">Contact</a></li>
+								<li><a href="shop.html">Shop</a>
+									<ul class="sub-menu">
+										<li><a href="shop.html">Shop</a></li>
+										<li><a href="checkout.html">Check Out</a></li>
+										<li><a href="single-product.html">Single Product</a></li>
+										<li><a href="cart.html">Cart</a></li>
+									</ul>
+								</li>
+								<li>
+									<div class="header-icons">
+										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									</div>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search arewa -->
+	
+	
+
+	
+	<!-- testimonail-section -->
+	
+		<div class="container">
+		<div class="titre">
+			<h1 style="font-family:serif;text-align:center">CHOOSE YOUR NEXT ARTISTIC DESTINATION</h1>
+			</div>
+				    <div class= "formulaire">
+					 
+					 {{ form_start(form) }}
+					 <p style="font-family:serif;text-align:center;font-size: large;">add a new place</p>
+      <div style="margin-top:20px">{{ form_label(form.nomplace)}}
+   {{form_widget(form.nomplace)}}
+   
+    <span style="color: #ff0000;">{{form_errors(form.nomplace,) }}</span>
+	</div>
+   <div style="margin-top:20px"> {{ form_row(form.description)}}</div>
+   <div style="margin-top:20px;margin-left:47px;"> {{ form_row(form.lien)}}</div>
+   <div style="margin-top:20px;margin-left:34px;"> {{ form_row(form.image )}}</div>
+  <div style="margin-top:20px">  {{ form_row(form.nblikes )}} </div>
+  <div style="margin-top:10px"> {{form_widget(form.latitude,{'id': 'lat'})}}</div>
+   <div style="margin-top:10px"> {{ form_row(form.longitude,{'id': 'long'})}}</div>
+   <div style="margin-top:20px">   {{ form_label(form.categorie)}}
+   {{form_widget(form.categorie)}}
+    <span style="color: #ff0000;">{{form_errors(form.categorie) }}</span></div>
+    <button class="btn" style="border-radius: 12px; background-color: #4CAF50;">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+					 </div>
+					 
+					<div id="maCarte"></div>
+				
+		    
+	    </div>
+	<!-- end testimonail-section -->
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="{{asset('assets/img/company-logos/1.png')}}" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="{{asset('assets/img/company-logos/2.png')}}" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="{{asset('assets/img/company-logos/3.png')}}" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="{{asset('../assets/img/company-logos/4.png')}}" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="{{asset('../assets/img/company-logos/5.png')}}" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+							<li>support@fruitkha.com</li>
+							<li>+00 111 222 3333</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="services.html">Shop</a></li>
+							<li><a href="news.html">News</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">Subscribe</h2>
+						<p>Subscribe to our mailing list to get the latest updates.</p>
+						<form action="index.html">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<p>Copyrights &copy; 2019 - <a href="https://imransdesign.com/">Imran Hossain</a>,  All Rights Reserved.<br>
+						Distributed By - <a href="https://themewagon.com/">Themewagon</a>
+					</p>
+				</div>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="{{asset('assets/js/jquery-1.11.3.min.js')}}"></script>
+	<!-- bootstrap -->
+	<script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+	<!-- count down -->
+	<script src="{{asset('assets/js/jquery.countdown.js')}}"></script>
+	<!-- isotope -->
+	<script src="{{asset('assets/js/jquery.isotope-3.0.6.min.js')}}"></script>
+	<!-- waypoints -->
+	<script src="{{asset('../assets/js/waypoints.js')}}"></script>
+	<!-- owl carousel -->
+	<script src="{{asset('../assets/js/owl.carousel.min.js')}}"></script>
+	<!-- magnific popup -->
+	<script src="{{asset('../assets/js/jquery.magnific-popup.min.js')}}"></script>
+	<!-- mean menu -->
+	<script src="{{asset('../assets/js/jquery.meanmenu.min.js')}}"></script>
+	<!-- sticker js -->
+	<script src="{{asset('../assets/js/sticker.js')}}"></script>
+	<!-- main js -->
+	<script src="{{asset('assets/js/main.js')}}"></script>
+   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+		{% block javascripts %}
+        <script>
+           
+            var tableauMarqueurs = [];
+          var marqueur;
+            // On initialise la carte
+            var carte = L.map('maCarte').setView([48.852969, 2.349903], 6);
+            
+            // On charge les "tuiles"
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                // Il est toujours bien de laisser le lien vers la source des données
+                attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                minZoom: 1,
+                maxZoom: 20
+            }).addTo(carte);
+			var icone = L.icon({
+                iconUrl: "assets/img/marker.png",
+                iconSize: [50, 50],
+                iconAnchor: [25, 50],
+                popupAnchor: [0, -50]
+            })
+
+              {%for markers in marks %}
+			  var marqueur = L.marker([{{markers.latitude}},{{markers.longitude}}], {icon: icone}); 
+			  tableauMarqueurs.push(marqueur);
+			  marqueur.bindPopup("<p>"+'{{markers.nomplace}}'+"</p>"+"<a href='{{path('mapupdate',{'id':markers.id})}}'>"+'like'+"</a>"+'      '+"<a href='{{path('likedelete',{'id':markers.id})}}'>"+'dislike'+"</a>"+"<br>"+"<a href='{{path('mapdelete',{'id':markers.id})}}'>"+'delete'+"</a>");
+			  carte.addLayer(marqueur);
+			  
+			  {%endfor%}
+            var marqueurs = L.markerClusterGroup();
+
+           
+            carte.on('click', mapClickListen)
+            function mapClickListen(e) {
+    // On récupère les coordonnées du clic
+    pos = e.latlng
+
+    // On crée un marqueur
+	 if (tableauMarqueurs.length <{{marklength+1}}) {
+        // Si oui, on le retire
+        addMarker(pos);
+    }else{
+
+		carte.removeLayer(tableauMarqueurs[tableauMarqueurs.length-1]);
+		tableauMarqueurs.pop();
+		addMarker(pos);
+	}
+    
+
+    // On affiche les coordonnées dans le formulaire
+    
+}
+function addMarker(pos){
+    // On vérifie si le marqueur existe déjà
+   
+    var marqueur = L.marker(pos, {icon: icone}); //.addTo(carte); Inutile lors de l'utilisation des clusters
+                
+                marqueurs.addLayer(marqueur); // On ajoute le marqueur au groupe
+
+                // On ajoute le marqueur au tableau
+                tableauMarqueurs.push(marqueur);
+    
+
+    // On ajoute le marqueur
+    var groupe = new L.featureGroup(tableauMarqueurs);
+
+            // On adapte le zoom au groupe
+            //carte.fitBounds(groupe.getBounds().pad(7));
+
+ var lat = document.getElementById('lat');
+ lat.value =pos.lat;
+var long=document.getElementById('long');
+ long.value=pos.lng;
+
+            for (mark in tableauMarqueurs){
+            carte.addLayer(marqueur);
+			
+
+     
+   }
+}
+        </script>
+{% endblock %}
+{% endblock %}
+

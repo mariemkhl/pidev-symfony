@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    {{ form_row(form.nomplace)}}
+    {{ form_row(form.description)}}
+    {{ form_row(form.lien)}}
+    {{ form_row(form.image)}}
+    {{ form_row(form.nblikes)}}
+    {{ form_label(form.latitude)}}
+   {{form_widget(form.latitude,{'attr': {'id':'latitudeid'}})}}
+    {{ form_row(form.longitude)}}
+    {{ form_row(form.categorie)}}
+    
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
