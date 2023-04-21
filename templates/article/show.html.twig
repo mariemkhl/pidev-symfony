@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+  {%block PreLoader %}
+     <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+     </div>
+    {% endblock %}
 	
 	
 	<!-- single article section -->
@@ -13,12 +20,13 @@
 
                             <p class="blog-meta">
 								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i>  {{ article.dateArticle ? article.dateArticle|date('Y-m-d') : '' }}</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{ article.dateArticle|date('Y-m-d') }}</span>
+
 							</p>
 							<h2>{{ article.titreArticle }}</h2>
 							<p></p>{{ article.contentArticle }}</p>
 						</div>
-
+{% block comments %}
 						<div class="comments-list-wrap">
 							<h3 class="comment-count-title">3 Comments</h3>
 							<div class="comment-list">
@@ -66,6 +74,7 @@
 						</div>
 					</div>
 				</div>
+				{% endblock %}
 				<div class="col-lg-4">
 					<div class="sidebar-section">
 						<div class="recent-posts">

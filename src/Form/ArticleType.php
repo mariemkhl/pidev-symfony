@@ -33,7 +33,7 @@ class ArticleType extends AbstractType
         ])
         
         
-            ->add('dateArticle')
+           // ->add('dateArticle')
             ->add('contentArticle', TextareaType::class, [
                 'label' => 'Contenu de l\'article',
                 'required' => true,
@@ -50,7 +50,7 @@ class ArticleType extends AbstractType
                 'required' => false,
             ])
             ->add('categoryArticle')
-            ->add('iduser')
+            //->add('iduser')
         ;
     }
 

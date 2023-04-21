@@ -39,6 +39,29 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchByTitle(string $searchTerm): array
+{
+    $qb = $this->createQueryBuilder('a')
+        ->where('a.titreArticle LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->getQuery();
+
+    return $qb->getResult();
+}
+
+
+//     public function searchByTerm(string $searchTerm): array
+// {
+//     $qb = $this->createQueryBuilder('a')
+//         ->where('a.titreArticle LIKE :searchTerm')
+//         ->orWhere('a.contentArticle LIKE :searchTerm')
+//         ->setParameter('searchTerm', '%'.$searchTerm.'%')
+//         ->getQuery();
+
+//     return $qb->getResult();
+// }
+
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

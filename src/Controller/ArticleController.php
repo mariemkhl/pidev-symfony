@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -29,9 +29,12 @@ class ArticleController extends AbstractController
 
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ArticleRepository $articleRepository): Response
+    public function new(Request $request, ArticleRepository $articleRepository,Security $security): Response
     {
         $article = new Article();
+        $iduser = $security->getUser();
+        $article->setIdUser($iduser);
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
     
@@ -117,6 +120,44 @@ public function edit(Request $request, Article $article, ArticleRepository $arti
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+ * @Route("/article/search", name="app_article_search", methods={"GET"})
+ */
+
+
+public function search(Request $request, ArticleRepository $articleRepository): Response
+{
+    $searchTerm = $request->query->get('q');
+
+    if ($searchTerm) {
+        $articles = $articleRepository->findBy(['titreArticle' => $searchTerm]);
+    } else {
+        $articles = $articleRepository->findAll();
+    }
+
+    return $this->render('article/index.html.twig', [
+        'articles' => $articles,
+    ]);
+}
+
+
+
+//  public function search(Request $request, ArticleRepository $articleRepository): Response
+// {
+//     $searchtitreArticle = $request->query->get('q');
+
+//     if ($searchtitreArticle) {
+//         $articles = $articleRepository->searchBytitreArticle($searchtitreArticle);
+//     } else {
+//         $articles = $articleRepository->findAll();
+//     }
+
+//     return $this->render('article/index.html.twig', [
+//         'articles' => $articles,
+//     ]);
+// }
+
 
   
 

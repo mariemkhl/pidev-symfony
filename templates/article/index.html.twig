@@ -2,43 +2,96 @@
 
 {% block title %}Article index{% endblock %}
 
+
+
 {% block body %}
-    <h1> </h1>
+
+    {%block PreLoader %}
+     <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+     </div>
+    {% endblock %}
+    <h1>  </h1>
 
     <style>
        .card {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 20px;
     margin-bottom: 20px;
+    width: 351.5px;
+    height: 450px;
+     margin-right: auto;
+    margin-left: auto;
 }
+
 
 .card:hover {
-    box-shadow: 0px 0px 10px #888;
+    box-shadow: 0px 0px 30px #888;
 }
 
-    </style>
+.card-img-container {
+    width: 350px; /* set the desired width */
+    height: 200px; /* set the desired height */
+    overflow: hidden; /* hide any overflow if the image is larger than the container */
+    border-radius: 20px;
+}
+.card-img-container img {
+    width: 100%; /* set the image width to 100% to fill the container */
+    height: auto; /* set the image height to auto to maintain aspect ratio */
+}
 
-    <div class="card-columns">
-        {% for article in articles %}
+
+    </style>
+     <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <form method="get" action="{{ path('app_article_search') }}">
+                    <div class="input-group mb-3">
+                        
+                <input class="form-control mr-sm-2" type="search" placeholder="Search articles" aria-label="Search" name="q">
+                
+            
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   <div class="row">
+    {% for article in articles %}
+        <div class="col-lg-4 col-md-6">
             <div class="card">
-                <img src="{{asset('uploads/images/' ~ article.imageArticle)}}" class="card-img-top" alt="{{ article.titreArticle }}">
+                <div class="card-img-container">
+                     <img src="{{asset('uploads/images/' ~ article.imageArticle)}}" class="card-img-top" alt="{{ article.titreArticle }}">
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ article.titreArticle }}</h5>
-                    <p class="card-text">{{ article.contentArticle }}</p>
-                    <a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="btn btn-primary">Read more</a>
-                    <a href="{{ path('app_article_edit', {'idArticle': article.idArticle}) }}" class="btn btn-secondary">Edit</a>
-                    
-
+                    <p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{ article.dateArticle|date('Y-m-d') }}</span>
+				    </p>
+                    <p class="card-text">{{ article.contentArticle|slice(0, 90) ~ '...' }}</p>
+                    <a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}"  class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+                    <a href="{{ path('app_article_edit', {'idArticle': article.idArticle}) }}"  class="read-more-btn">edit <i class="fas fa-angle-right"></i></a>
                 </div>
             </div>
-        {% else %}
+        </div>
+    {% else %}
+        <div class="col">
             <div class="card">
                 <div class="card-body">
                     <p class="card-text">No records found.</p>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+</div>
+
     <div class="row">
 				<div class="container">
 					<div class="row">

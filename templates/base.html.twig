@@ -85,7 +85,7 @@
 										<li><a href="shop.html">Shop</a></li>
 									</ul>
 								</li>
-								<li><a href="{{ path('app_article_index') }}">News</a>
+								<li><a href="{{path('app_article_index')}}">News</a>
 									<ul class="sub-menu">
 										<li><a href="news.html">News</a></li>
 										<li><a href="single-news.html">Single News</a></li>
@@ -120,6 +120,14 @@
     {%endblock%}
 
     {% block body%}
+	{%block PreLoader %}
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    {% endblock %}
+	
 
     {% endblock%}
 

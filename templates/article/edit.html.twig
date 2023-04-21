@@ -9,6 +9,13 @@
 {% endblock %}
 
 {% block body %}
+  {%block PreLoader %}
+     <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+     </div>
+    {% endblock %}
     <div class="container">
         <h1 class="my-5">{% if article.idArticle is not null %}Edit Article{% else %}Create New Article{% endif %}</h1>
         {{ form_start(form) }}

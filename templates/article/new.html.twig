@@ -3,6 +3,13 @@
 {% block title %}New Article{% endblock %}
 
 {% block body %}
+  {%block PreLoader %}
+     <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+     </div>
+    {% endblock %}
     <h1 class="font-italic text-center">Create New Article</h1>
 
 
@@ -21,10 +28,10 @@
                         </div>
                         
 
-                        <div class="form-group">
+                        {# <div class="form-group">
                             {{ form_label(form.dateArticle, 'Date') }}
                             {{ form_widget(form.dateArticle, { 'attr': {'class': 'form-control'} }) }}
-                        </div>
+                        </div> #}
 
                         <div class="form-group">
                             {{ form_label(form.contentArticle, 'Content') }}

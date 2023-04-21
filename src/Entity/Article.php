@@ -35,7 +35,7 @@ class Article
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="date_article", type="date", nullable=true)
+     * @ORM\Column(name="date_article", type="datetime", nullable=true , options={"default": "CURRENT_TIMESTAMP"})
      */
     private $dateArticle;
 
@@ -159,7 +159,7 @@ class Article
         return $this;
     }
 
-    public function getIduser(): ?int
+    public function getIduser(): ?Utilisateur
     {
         return $this->iduser;
     }
