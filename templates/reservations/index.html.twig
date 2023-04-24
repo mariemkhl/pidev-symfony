@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservations index{% endblock %}
+
+{% block body %}
+    <h3></h3>
+
+ <div class="row">
+    {% for reservation in reservations %}
+        <div class="col-lg-8 offset-lg-2>
+            <div class="card">
+            <div class="card-body">
+          <h5 class="card-title">{{reservation.idUser }}</h5>
+              <p class="card-text">{{ reservation.idEvent }}</p>
+                 <p class="card-text">{{ reservation.name }}</p>
+
+            <p class="card-text"><small class="text-muted">{{ reservation.datere ? reservation.datere|date('Y-m-d') : ''}}</small></p>
+
+
+             <a href="{{ path('app_reservations_show', {'idRes': reservation.idRes}) }} class="btn btn-primary py-2 px-4 mt-4">Show</a>
+                    <a href="{{ path('app_reservations_edit', {'idRes': reservation.idRes}) }}" class="btn btn-primary py-2 px-4 mt-4">Edit</a>
+
+     </div>
+            </div>
+     </div>
+   
+
+    {% else %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">No records found.</p>
+                </div>
+            </div>
+        </div>
+
+
+ {% endfor %}
+    <a href="{{ path('app_reservations_new') }}">Create new</a>
+{% endblock %}

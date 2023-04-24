@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events index{% endblock %}
+
+{% block body %}
+   <h3></h3>
+
+       <style>
+       .card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    width: 351.5px;
+    height: 450px;
+     margin-right: auto;
+    margin-left: auto;
+}
+.card:hover {
+    box-shadow: 0px 0px 30px #888;
+}
+.card-img-container {
+    width: 350px; /* set the desired width */
+    height: 200px; /* set the desired height */
+    overflow: hidden; /* hide any overflow if the image is larger than the container */
+    border-radius: 20px;
+}
+.card-img-container img {
+    width: 100%; /* set the image width to 100% to fill the container */
+    height: auto; /* set the image height to auto to maintain aspect ratio */
+}
+    </style>
+
+
+<div class="row">
+    {% for event in events %}
+        <div class="col-lg-8 offset-lg-2>
+            <div class="card">
+                <div class="card-img-container">
+                     <img src="{{asset('uploads/images/' ~ event.img )}}" class="card-img-top" alt="{{ event.nameev }}">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.nameev }}</h5>
+                    <p class="blog-meta">
+
+                    <span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{ event.dateEvent|date('Y-m-d')}}</span>
+            
+				    </p>
+
+                    <p class="card-text">{{ event.description|slice(0, 90) ~ '...' }}</p>
+                      <a href="{{ path('app_events_show', {'idEvent': event.idEvent}) }}">show</a>
+                    <a href="{{ path('app_events_edit', {'idEvent': event.idEvent}) }}">edit</a>
+
+                     </div>
+            </div>
+     </div>
+
+     {% else %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">No records found.</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+
+      
+     
+    <a href="{{ path('app_events_new') }}">Create new</a>
+{% endblock %}

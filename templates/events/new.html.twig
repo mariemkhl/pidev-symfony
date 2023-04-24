@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Events{% endblock %}
+
+{% block body %}
+    <h3 class= "font-italic text-center" >Create new Events</h3>
+
+            <div class="row">
+						<div class="col-lg-8 offset-lg-2 text-center">
+							<div class="error-text">
+     
+     {% for error in form.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+
+                     {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.nameev, 'Name') }}
+                            {{ form_widget(form.nameev, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                         <div class="form-group">
+                            {{ form_label(form.idUser, 'user') }}
+                            {{ form_widget(form.idUser, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.dateEvent, 'Date') }}
+                            {{ form_widget(form.dateEvent, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                     
+
+                        <div class="form-group">
+                            {{ form_label(form.location, 'Location') }}
+                            {{ form_widget(form.location, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                        
+                        <div class="form-group">
+                            {{ form_label(form.categorie, 'Category') }}
+                            {{ form_widget(form.categorie, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+
+                        <div class="form-group text-center">
+                            {{ form_label(form.nbplacetotal, 'Number Of Places ') }}
+                            {{ form_widget(form.nbplacetotal, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                          <div class="form-group">
+                             {{ form_label(form.img, 'Upload Image', {'label_attr': {'class': 'custom-file-upload'}}) }}
+                             {{ form_widget(form.img, { 'attr': {'class': 'form-control-file'} }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.description, 'Description') }}
+                            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+    
+
+
+          <button type="submit" class="btn btn-primary">Create</button>
+                    {{ form_end(form) }}
+
+</div>
+</div>
+</div>
+						<div class="col-lg-8 offset-lg-2 text-center">
+
+    <a href="{{ path('app_events_index') }}">back to list</a>
+</div>
+
+{% endblock %}

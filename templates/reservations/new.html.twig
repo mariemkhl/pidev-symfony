@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Reservations{% endblock %}
+
+{% block body %}
+    
+        <h3 class= "font-italic text-center" >Create new Reservations</h3>
+
+            <div class="row">
+						<div class="col-lg-8 offset-lg-2 text-center">
+							<div class="error-text">
+     
+
+ 
+
+ {% for error in form.vars.errors %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+
+    {{ form_start(form) }}
+                       
+                          <div class="form-group">
+                            {{ form_label(form.idEvent, 'Event') }}
+                            {{ form_widget(form.idEvent, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                         <div class="form-group">
+                            {{ form_label(form.idUser, 'User') }}
+                            {{ form_widget(form.idUser, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                           <div class="form-group">
+                            {{ form_label(form.name, 'Name') }}
+                            {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.datere, 'Date') }}
+                            {{ form_widget(form.datere, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                     
+
+<button type="submit" class="btn btn-primary">Create</button>
+                    {{ form_end(form) }}
+                    
+
+</div>
+</div>
+</div>
+						<div class="col-lg-8 offset-lg-2 text-center">
+
+    <a href="{{ path('app_reservations_index') }}">back to list</a>
+</div>
+
+    
+{% endblock %}

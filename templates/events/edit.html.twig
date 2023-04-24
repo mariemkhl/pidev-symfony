@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if event.idEvent is not null %}
+        Edit Events {{ event.idEvent }}
+    {% else %}
+        Create New Events
+    {% endif %}
+{% endblock %}
+	
+ {% block body %}
+   <div class="container">
+     <h3 class="font-italic text-center">{% if event.idEvent is not null %}Edit Events{% else %}Create New Events{% endif %}</h3>
+{{ form_start(form) }}
+        <div class="row">
+         <div class="col-lg-8 offset-lg-2  text-center">
+         <div class="error-text">
+         <div class="form-group">
+                            {{ form_label(form.nameev, 'Name') }}
+                            {{ form_widget(form.nameev, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    <div class="form-group">
+                     {% if event.img %}
+                        <img src="{{ asset('uploads/' ~ event.img) }}" alt="Events Image" class="img-thumbnail">
+                    {% endif %}
+                    {{ form_label(form.img) }}
+                    {{ form_widget(form.img, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+
+                 <div class="form-group">
+                            {{ form_label(form.idUser, 'user') }}
+                            {{ form_widget(form.idUser, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.dateEvent, 'Date') }}
+                            {{ form_widget(form.dateEvent, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        
+                     
+
+                        <div class="form-group">
+                            {{ form_label(form.location, 'Location') }}
+                            {{ form_widget(form.location, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+
+                <div class="form-group">
+          {{ form_label(form.categorie) }}
+                    {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div "form-group" >
+          {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                     <div class="form-group text-center">
+                            {{ form_label(form.nbplacetotal, 'Number Of Places ') }}
+                            {{ form_widget(form.nbplacetotal, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+
+                   
+                     <div >
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            <a href="{{ path('app_events_index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+        {{ form_end(form) }}
+
+
+            {% if event.idEvent is not null %}
+           {{ include('events/_delete_form.html.twig') }}
+                 {% endif %}
+   
+</div>
+</div>
+</div>
+</div>
+         <div class="col-lg-8 offset-lg-2  text-center">
+      <a href="{{ path('app_events_index') }}">back to list</a>
+      </div>
+
+      
+
+{% endblock %}
