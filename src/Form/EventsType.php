@@ -43,6 +43,7 @@ class EventsType extends AbstractType
             ->add('dateEvent' ) 
 
 
+
             ->add('location' , TextType::class, [
                 'label' => 'Location',
                 'required' => true,
@@ -90,7 +91,7 @@ class EventsType extends AbstractType
         ;
     }
 
-  /*  public function validateEventdate($value, ExecutionContextInterface $context)
+   /*public function validateEventdate($value, ExecutionContextInterface $context)
     {
         $today = new \DateTime();
         if ($value < $today) {

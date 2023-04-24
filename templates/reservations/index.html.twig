@@ -17,7 +17,7 @@
             <p class="card-text"><small class="text-muted">{{ reservation.datere ? reservation.datere|date('Y-m-d') : ''}}</small></p>
 
 
-             <a href="{{ path('app_reservations_show', {'idRes': reservation.idRes}) }} class="btn btn-primary py-2 px-4 mt-4">Show</a>
+             <a href="{{ path('app_reservations_show', {'idRes': reservation.idRes}) }}" class="btn btn-primary py-2 px-4 mt-4">Show</a>
                     <a href="{{ path('app_reservations_edit', {'idRes': reservation.idRes}) }}" class="btn btn-primary py-2 px-4 mt-4">Edit</a>
 
      </div>
