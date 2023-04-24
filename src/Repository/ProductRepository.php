@@ -39,6 +39,20 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findByCategoryName($categoryName)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->join('p.category', 'c')
+            ->andWhere('c.name = :categoryName')
+            ->setParameter('categoryName', $categoryName)
+            ->orderBy('p.name', 'ASC')
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

@@ -26,9 +26,10 @@ class ProdCollectType extends AbstractType
             ->add('products', EntityType::class, [
                 'label'=> 'products',
                 'class' => Product::class,
-                'choice_label' =>  function (Product $product) {
-                    return sprintf('%s', $product->getId());
-                },
+                'choice_label' => 'nom',
+                // 'choice_label' =>  function (Product $product) {
+                //     return sprintf('%s', $product->getId());
+                // },
                 'placeholder' => 'Choose product',
                 'attr' => ['class' => 'form-select'],
                 ])

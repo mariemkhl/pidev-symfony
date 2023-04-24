@@ -3,7 +3,6 @@
 
 
 {% block body %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +12,10 @@
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Add Product</title>
+	<title>Shop</title>
 
 	<!-- favicon -->
-	<link rel="shortcut icon" type="{{ asset('image/png" href="assets/img/favicon.png')}}">
+	<link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/favicon.png')}}">
 	<!-- google font -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
@@ -57,7 +56,7 @@
 						<!-- logo -->
 						<div class="site-logo">
 							<a href="index.html">
-								<img src="{{ asset('assets/img/logo.jpg')}}" alt="">
+								<img src="{{ asset('assets/img/logo.png')}}" alt="">
 							</a>
 						</div>
 						<!-- logo -->
@@ -106,6 +105,7 @@
 						</nav>
 						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 						<div class="mobile-menu"></div>
+						
 						<!-- menu end -->
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 		</div>
 	</div>
 	<!-- end header -->
-
+{% block content %}
 	<!-- search area -->
 	<div class="search-area">
 		<div class="container">
@@ -123,8 +123,13 @@
 					<div class="search-bar">
 						<div class="search-bar-tablecell">
 							<h3>Search For:</h3>
-							<input type="text" placeholder="Keywords">
-							<button type="submit">Search <i class="fas fa-search"></i></button>
+							 <h1>Search Results for "{{ searchTerm }}"</h1>
+							 <form method="GET" action="{{ path('searchProducts') }}">
+                             <input type="text" name="q" value="{{ searchTerm }}" placeholder="Keywords">
+                             <button type="submit">Search <i class="fas fa-search"></i></button>
+                             </form>
+							{# <input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button> #}
 						</div>
 					</div>
 				</div>
@@ -132,15 +137,15 @@
 		</div>
 	</div>
 	<!-- end search arewa -->
-	
+	{% endblock %}
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
-						<p>Add A Product</p>
-						<h1>Share your art</h1>
+						<p>Enjoy The Art</p>
+						<h1>ARTWORKS</h1>
 					</div>
 				</div>
 			</div>
@@ -148,155 +153,118 @@
 	</div>
 	<!-- end breadcrumb section -->
 
-	<!-- check out section -->
-	<div class="checkout-section mt-150 mb-150">
+	<!-- products -->
+	<div class="product-section mt-150 mb-150">
 		<div class="container">
+
 			<div class="row">
-				<div class="col-lg-8">
-					<div class="checkout-accordion-wrap">
-						<div class="accordion" id="accordionExample">
-						  <div class="card single-accordion">
-						    <div class="card-header" id="headingOne">
-						      <h5 class="mb-0">
-						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						          you can add your product down below
-						        </button>
-						      </h5>
-						    </div>
-
-						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-						      <div class="card-body">
-						        <div class="billing-address-form">
-                                 
-  {# {{ form_start(form, {'attr': {'class': 'container'}, 'method': 'POST'}) }} #}
-  {{ form_start(form, {'attr': {'class': 'container', 'novalidate': 'novalidate'}, 'method': 'POST', 'action': path('addProduct')}) }}
-
-<div class="form-group">
-    {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
-</div>
-
-<div class="form-group">
-    {{ form_row(form.description, {'attr': {'class': 'form-control', 'placeholder': 'description'}}) }}
-</div>
-
-<div class="form-group">
-    {{ form_row(form.prix, {'attr': {'class': 'form-control', 'placeholder': 'Price'}}) }}
-</div>
-
-
- {{ form_widget(form.img, {'attr': {'class': 'form-control', 'placeholder': 'Image'}} ) }}
+                <div class="col-md-12">
+                    <div class="product-filters">
+                        <ul>
+						
 
 
 
 
 
-{# <div class="form-group">
-    {{ form_row(form.categ, {'attr': {'class': 'form-control', 'placeholder': 'Category'}}) }}
-</div> #}
 
-<div class="form-group">
-    {{ form_label(form.user, 'User ID: 12345') }}
-	 {{ form_row(form.user)}}
-	 {{ form_errors(form.user) }}
-    
-</div>
-
-
-
-<div class="form-group">
-    {{ form_row(form.url, {'attr': {'class': 'form-control', 'placeholder': 'URL'}}) }}
-</div>
-
-<div class="form-group">
-    {{ form_row(form.date_ajout, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
-</div>
-
-{# <div class="form-group">
-    {{ form_row(form.date_achat, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
-</div> #}
-
-
-
-{# {{ form_label(form.category) }} #}
-{{ form_row(form.category) }}
-{# <select class="form-control" id="{{ form.category.vars.id }}" name="{{ form.category.vars.full_name }}">
-    {% for choice in form.category.vars.choices %}
-        {% set selected = (choice.value == form.category.vars.value) ? 'selected' : '' %}
-        <option value="{{ choice.value }}" {{ selected }}>{{ choice.label }}</option>
+						 <li class="active" data-filter="*"> <a href="{{ path('shop') }}" class="active" data-filter="*">All</a></li>
+                            {# <li class="active" data-filter="*">All</li> #}
+                            {# <li data-filter=".strawberry">Edition</li>
+                            <li data-filter=".berry">Painting</li>
+                            <li data-filter=".lemon">sculptur</li> #}
+							<div class="category-buttons">
+    {% for category in categories %}
+       <li class="active" data-filter="*"> <a href="{{ path('products_by_category', {'category_id': category.id}) }}" >{{ category.nom }}</a></li>
     {% endfor %}
-</select> #}
-
-  
-
- <button type="submit" class="btn btn-lg btn-success">Save</button>  	
-
-
-
-
-{{ form_end(form) }}
-
-
-
- 
+</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
 
 
 
+{# <div class="d-flex flex-wrap">
+    {% for product in products %}
+        <div class="col-lg-4 col-md-6 text-center strawberry">
+            <div class="single-product-item">
+                <div class="product-image">
+                    <a href="{{ path('singleproduct1', {'id': product.id}) }}"><img src="{{ asset('assets/img/products/' ~ product.img)}}" alt="{{ product.nom }}" onerror="this.onerror=null;this.src='{{ asset('assets/img/products/tab1.jpg') }}';"></a>
+                </div>
+                <h3>{{ product.nom }}</h3>
+                <p class="product-price"><span>price $$</span> {{ product.prix }} </p>
+                <a href="{{ path('cart', {'id': product.id}) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            </div>
+        </div>
+	{% else %}
+        <h1 style="text-align: center;"> Sorry No products found.</h1>
+    {% endfor %}
+</div> #}
 
 
 
-                                
-		     
+<!-- Add this button to trigger the sort by price -->
+<form method="get" action="{{ path('sortProducts') }}">
+  <input type="hidden" name="sort_by" value="price_desc">
+  {# <button type="submit">Sort by Price ( low to high )</button> #}
+  <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Sort by Price (low to high)</button>
+
+</form>
+
+<!-- Display the products -->
+<div class="d-flex flex-wrap">
+  {% for product in products %}
+    <div class="col-lg-4 col-md-6 text-center strawberry">
+      <div class="single-product-item">
+        <div class="product-image">
+          <a href="{{ path('singleproduct1', {'id': product.id}) }}"><img src="{{ asset('assets/img/products/' ~ product.img)}}" alt="{{ product.nom }}" onerror="this.onerror=null;this.src='{{ asset('assets/img/products/tab1.jpg') }}';"></a>
+        </div>
+        <h3>{{ product.nom }}</h3>
+        <p class="product-price"><span>price $$</span> {{ product.prix }} </p>
+        <a href="{{ path('cart', {'id': product.id}) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+      </div>
+    </div>
+  {% else %}
+    <h1 style="text-align: center;"> Sorry No products found.</h1>
+  {% endfor %}
+</div>
 
 
-						        </div>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="card single-accordion">
-						    <div class="card-header" id="headingTwo">
-						      <h5 class="mb-0">
-						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						          Go Down Page
-						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-						      <div class="card-body">
-						        <div class="shipping-address-form">
-						        	<p>Your shipping address form is here.</p>
-						        </div>
-						      </div>
-						    </div>
-						  </div>
-						  {# <div class="card single-accordion">
-						    <div class="card-header" id="headingThree">
-						      <h5 class="mb-0">
-						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-						          Card Details
-						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-						      <div class="card-body">
-						        <div class="card-details">
-						        	<p>Your card details goes here.</p>
-						        </div>
-						      </div>
-						    </div>
-						  </div> #}
-						</div>
+{% block contentTrie %}
+   {% for range in ranges %}
+    <h2>{{ range.min }} - {{ range.max }}</h2>
+    <ul>
+        {% for product in range.products %}
+            <li>{{ product.nom }} - {{ product.prix }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+    </ul>
+{% endblock %}
+   
 
+
+				
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="pagination-wrap">
+						<ul>
+							<li><a href="#">Prev</a></li>
+							<li><a href="#">1</a></li>
+							<li><a class="active" href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">Next</a></li>
+						</ul>
 					</div>
-				</div>
-
-				<div class="col-lg-4">
-					
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- end check out section -->
+	<!-- end products -->
 
 	<!-- logo carousel -->
 	{# <div class="logo-carousel-section">

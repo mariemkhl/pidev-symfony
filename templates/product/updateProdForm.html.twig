@@ -183,67 +183,9 @@
     {{ form_row(form.prix, {'attr': {'class': 'form-control', 'placeholder': 'Price'}}) }}
 </div>
 
-{# <div class="form-group">
-    {{ form_row(form.img, {'attr': {'class': 'form-control', 'placeholder': 'Photo'}}) }}
-</div> #}
 
 
-{# <div class="form-group">
-    {{ form_label(form.img) }}
-    <div class="custom-file">
-        <input type="file" id="{{ form.img.vars.id }}" name="{{ form.img.vars.full_name }}" class="custom-file-input">
-        <label class="custom-file-label" for="{{ form.img.vars.id }}">Choose file</label>
-    </div>
-</div>
-
-<script>
-    const input = document.getElementById('{{ form.img.vars.id }}');
-    const label = input.nextElementSibling;
-    input.addEventListener('change', (event) => {
-        const fileName = event.target.value.split('\\').pop();
-        label.textContent = fileName;
-    });
-</script> #}
-
- {# <div class="form-group">
-    {{ form_label(form.img) }}
-    {{ form_row(form.img, {'attr': {'class': 'form-control', 'placeholder': 'Photo'}}) }}
-    <div class="custom-file">
-        <input type="file" id="{{ form.img.vars.id }}" name="{{ form.img.vars.full_name }}" class="custom-file-input">
-        <label class="custom-file-label" for="{{ form.img.vars.id }}">Choose file</label>
-    </div>
-</div>
-<script>
-    const input = document.getElementById('{{ form.img.vars.id }}');
-    const label = input.nextElementSibling;
-    input.addEventListener('change', (event) => {
-        const fileName = event.target.value.split('\\').pop();
-        const filePath = URL.createObjectURL(event.target.files[0]);
-        label.textContent = filePath;
-    });
-</script> #}
-
-
-
-
-
-<div class="form-group">
-    {{ form_label(form.img) }}
-    <div class="custom-file">
-        <input type="file" id="{{ form.img.vars.id }}" name="{{ form.img.vars.full_name }}" class="custom-file-input">
-        <label class="custom-file-label" for="{{ form.img.vars.id }}">Choose file</label>
-    </div>
-</div>
-
-<script>
-    const input = document.getElementById('{{ form.img.vars.id }}');
-    const label = input.nextElementSibling;
-    input.addEventListener('change', (event) => {
-        const fileName = event.target.value.split('\\').pop();
-        label.textContent = fileName;
-    });
-</script>
-
+{{ form_widget(form.img, {'attr': {'class': 'form-control', 'placeholder': 'Image'}} ) }}
 
 
 
@@ -254,12 +196,14 @@
 </div> #}
 
 <div class="form-group">
-    {{ form_label(form.user, 'User ID') }}
-    12345
+    {{ form_label(form.user, 'User ID: 12345') }}
+	 {{ form_row(form.user)}}
+	 {{ form_errors(form.user) }}
+    
 </div>
-{# <div class="form-group">
-    {{ form_row(form.user, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
-</div> #}
+
+
+
 
 
 <div class="form-group">
@@ -276,13 +220,16 @@
 
 
 
-{{ form_label(form.category) }}
-<select class="form-control" id="{{ form.category.vars.id }}" name="{{ form.category.vars.full_name }}">
+
+{# {{ form_label(form.category) }} #}
+{{ form_row(form.category) }}
+{# <select class="form-control" id="{{ form.category.vars.id }}" name="{{ form.category.vars.full_name }}">
     {% for choice in form.category.vars.choices %}
         {% set selected = (choice.value == form.category.vars.value) ? 'selected' : '' %}
         <option value="{{ choice.value }}" {{ selected }}>{{ choice.label }}</option>
     {% endfor %}
-</select>
+</select> #}
+
 
   
 

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 
+
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
@@ -15,6 +17,7 @@ use App\Form\ProdCollectType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 
 use App\Entity\Product;
@@ -30,7 +33,10 @@ class ProductType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('prix')
-            ->add('img')
+            // ->add('img')
+            ->add('img', FileType::class, [
+                'mapped' => false,
+            ])
             // ->add('categ')
             ->add('user')
             ->add('url')
@@ -39,24 +45,32 @@ class ProductType extends AbstractType
             // ->add('category')
 
             
-            ->add('PRODcol')
+            // ->add('PRODcol')
 
 
             ->add('category', EntityType::class, [
                 'label'=> 'categories',
                 'class' => Category::class,
                 'choice_label' =>  function (Category $category) {
-                    return sprintf('%s', $category->getId());
+                    return sprintf('%s', $category->getNom());
                 },
                 'placeholder' => 'Choose category',
                 'attr' => ['class' => 'form-select'],
             ])
 
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'nom', 
-                'placeholder' => 'Select a category',
-            ])
+
+        
+
+        
+
+
+
+
+            // ->add('category', EntityType::class, [
+            //     'class' => Category::class,
+            //     'choice_label' => 'nom', 
+            //     'placeholder' => 'Select a category',
+            // ])
 
 
             // ->add('PRODcol', EntityType::class, [

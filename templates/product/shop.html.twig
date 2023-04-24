@@ -13,6 +13,7 @@
 
 	<!-- title -->
 	<title>Shop</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-jdO+u1r7rCLZKYbRW6ggWU6JziuEDwFe/g6Gpnidq3Rs3gVTfaamnLhzsKTZ9sV8B/YGzn61vzQorD+shxCuTQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/favicon.png')}}">
@@ -105,6 +106,7 @@
 						</nav>
 						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 						<div class="mobile-menu"></div>
+						
 						<!-- menu end -->
 					</div>
 				</div>
@@ -113,6 +115,9 @@
 	</div>
 	<!-- end header -->
 
+
+
+{% block content %}
 	<!-- search area -->
 	<div class="search-area">
 		<div class="container">
@@ -122,8 +127,13 @@
 					<div class="search-bar">
 						<div class="search-bar-tablecell">
 							<h3>Search For:</h3>
-							<input type="text" placeholder="Keywords">
-							<button type="submit">Search <i class="fas fa-search"></i></button>
+							 <h1>Search Results for "{{ searchTerm }}"</h1>
+							 <form method="GET" action="{{ path('searchProducts') }}">
+                             <input type="text" name="q" value="{{ searchTerm }}" placeholder="Keywords">
+                             <button type="submit">Search <i class="fas fa-search"></i></button>
+                             </form>
+							{# <input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button> #}
 						</div>
 					</div>
 				</div>
@@ -131,7 +141,7 @@
 		</div>
 	</div>
 	<!-- end search arewa -->
-	
+	{% endblock %}
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
@@ -147,22 +157,42 @@
 	</div>
 	<!-- end breadcrumb section -->
 
+
+<form method="get" action="{{ path('sortProducts') }}">
+  <input type="hidden" name="sort_by" value="price_desc">
+  {# <button type="submit">Sort by Price ( low to high )</button> #}
+  <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Sort by Price (low to high)</button>
+
+</form>
+
+
+
 	<!-- products -->
 	<div class="product-section mt-150 mb-150">
+
+
 		<div class="container">
 
 			<div class="row">
                 <div class="col-md-12">
                     <div class="product-filters">
                         <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".strawberry">Edition</li>
+						
+                          			 <li class="active" data-filter="*"> <a href="{{ path('shop') }}" class="active" data-filter="*">All</a></li>
+                            {# <li class="active" data-filter="*">All</li> #}
+                            {# <li data-filter=".strawberry">Edition</li>
                             <li data-filter=".berry">Painting</li>
-                            <li data-filter=".lemon">sculptur</li>
+                            <li data-filter=".lemon">sculptur</li> #}
+							<div class="category-buttons">
+    {# {% for category in categories %}
+       <li class="active" data-filter="*"> <a href="{{ path('products_by_category', {'category_id': category.id}) }}" >{{ category.nom }}</a></li>
+    {% endfor %} #}
+</div>
                         </ul>
                     </div>
                 </div>
             </div>
+		
 
  {# {% for product in products %}
     <div class="row product-lists">
@@ -183,7 +213,68 @@
 
 
 
+{# // THIS THE FINAL #}
+
 <div class="d-flex flex-wrap">
+    {% for product in products %}
+        <div class="col-lg-4 col-md-6 text-center strawberry">
+            <div class="single-product-item">
+                <div class="product-image">
+                    <a href="{{ path('singleproduct1', {'id': product.id}) }}"><img src="{{ asset('assets/img/products/' ~ product.img)}}" alt="{{ product.nom }}" onerror="this.onerror=null;this.src='{{ asset('assets/img/products/tab1.jpg') }}';"></a>
+                </div>
+                <h3>{{ product.nom }}</h3>
+                <p class="product-price"><span>price $$</span> {{ product.prix }} </p>
+
+
+
+                <a href="{{ path('cart', {'id': product.id}) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            </div>
+        </div>
+		{% else %}
+        <h1 style="text-align: center;"> Sorry No products found.</h1>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+{# 
+ {% if product.ratings is empty %}
+                        No ratings yet.
+                    {% else %}
+                        {% for rating in product.ratings %}
+                            {{ rating }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    {% endif %} #}
+
+
+
+
+{# // THIS THE FINAL #}
+
+{# <div class="d-flex flex-wrap">
+    {% for product in products %}
+        <div class="col-lg-4 col-md-6 text-center strawberry">
+            <div class="single-product-item">
+                <div class="product-image">
+                    <a href="{{ path('singleproduct1', {'id': product.id}) }}"><img src="{{ asset('assets/img/products/' ~ product.img)}}" alt="{{ product.nom }}" onerror="this.onerror=null;this.src='{{ asset('assets/img/products/tab1.jpg') }}';"></a>
+                </div>
+                <h3>{{ product.nom }}</h3>
+                <p class="product-price"><span>price $$</span> {{ product.prix }} </p>
+                <a href="{{ path('cart', {'id': product.id}) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            </div>
+        </div>
+	{% else %}
+        <h1 style="text-align: center;"> Sorry No products found.</h1>
+    {% endfor %}
+</div> #}
+
+
+
+{# THIS IS HE CODE #}
+{# <div class="d-flex flex-wrap">
     {% for product in products %}
         <div class="col-lg-4 col-md-6 text-center strawberry">
             <div class="single-product-item">
@@ -196,7 +287,7 @@
             </div>
         </div>
     {% endfor %}
-</div>
+</div> #}
 
    
 

@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 
+use Gedmo\Mapping\Annotation as Gedmo;
+use Stof\DoctrineExtensionsBundle\Mapping\Annotation as Stof;
+use CoreShop\Component\Rating\Model\RatingInterface;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -20,6 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
+
+   
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,22 +32,23 @@ class Product
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Le nom du produit est Obligatoire.")]
-    #[Assert\Length(max:15,maxMessage:"Le nom du category ne doit pas etre inférieur au trois caractère.")]
+    // #[Assert\Length(max:15,maxMessage:"Le nom du category ne doit pas etre inférieur au trois caractère.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank(message:"La Description du produit est Obligatoire.")]
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Le prix du produit est Obligatoire.")]
+    // #[Assert\NotBlank(message:"Le prix du produit est Obligatoire.")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"L'image du produit est Obligatoire.")]
+    // #[Assert\NotBlank(message:"L'image du produit est Obligatoire.")]
     private ?string $img = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"La categorie du produit est Obligatoire.")]
+    // #[Assert\NotBlank(message:"La categorie du produit est Obligatoire.")]
     private ?string $categ = null;
 
     #[ORM\Column]
@@ -67,12 +73,33 @@ class Product
 
 
 
+
+
+    // #[Gedmo\Timestampable(on: "create")]
+    // #[ORM\Column(type: "datetime")]
+    // private ?\DateTimeInterface $createdAt = null;
+
+    // #[Gedmo\Timestampable(on: "update")]
+    // #[ORM\Column(type: "datetime")]
+    // private ?\DateTimeInterface $updatedAt = null;
+
+
+
+
+
+
+
+
+  
+
+
     
 
     public function __construct()
     {
         $this->PRODcol = new ArrayCollection();
         $this->collNames = new ArrayCollection();
+     
     }
 
     public function getId(): ?int
@@ -223,6 +250,14 @@ class Product
 
         return $this;
     }
+
+
+
+
+
+
+
+    
 
    
 }

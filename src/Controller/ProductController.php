@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -12,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\Persistence\ManagerRegistry;
-
+use App\Repository\CategoryRepository;
 use App\Entity\Category;
 
 use App\Entity\ProdCollect;
@@ -25,8 +26,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Label\Font\NotoSans;
+use App\Controller\LogoInterface;
+
+
+use CalendarBundle\CalendarEvents;
+use CalendarBundle\Entity\Event;
+use CalendarBundle\Event\CalendarEvent;
+use App\Controller\CalendarEventInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Tattali\CalendarBundle\CalendarBundle;
+
+use App\Service\Calendar;
+
 #[Route('/product')]
-class ProductController extends AbstractController
+class ProductController extends AbstractController  implements EventSubscriberInterface 
 {
 
 
@@ -37,6 +59,410 @@ class ProductController extends AbstractController
             'controller_name' => 'homeController',
         ]);
     }
+
+    #[Route('/add_event', name: 'add_event', methods: ['POST'])]
+    public function addEvent(Request $request): Response
+{
+    $title = $request->request->get('title');
+    $start = new \DateTime($request->request->get('start'));
+    $end = new \DateTime($request->request->get('end'));
+
+    $event = new Event($title, $start, $end);
+
+    
+
+    $now = new \DateTime();
+    $start = $now->setTime(0, 0, 0);
+    $end = $now->setTime(23, 59, 59);
+    $filters = [];
+
+    $calendarEvent = new CalendarEvent($start, $end, $filters);
+
+  
+    $calendarEvent->addEvent($event);
+
+ 
+
+
+    return $this->redirectToRoute('calendar');
+        return $this->render('product/calendar.html.twig', [
+            'calendar' => $calendarEvent,
+            'event' => $event,
+        ]);
+    }
+
+
+    public static function getSubscribedEvents()
+    {
+        return [];
+    }
+#[Route('/calendar', name: 'calendar')]
+public function calendar()
+    {
+
+
+
+        $now = new \DateTime();
+        $start = $now->setTime(0, 0, 0);
+        $end = $now->setTime(23, 59, 59);
+        $filters = [];
+    
+        $calendarEvent = new CalendarEvent($start, $end, $filters);
+    
+        // You can add events to the calendar using the addEvent method
+        $calendarEvent->addEvent(new Event(
+            'Event 1',
+            new \DateTime('Tuesday this week'),
+            new \DateTime('Wednesday this week')
+        ));
+    
+        $calendarEvent->addEvent(new Event(
+            'All day event',
+            new \DateTime('Friday this week')
+        ));
+
+        $calendarEvent->addEvent(new Event(
+            'Task 1',
+            new \DateTime('tomorrow 10:00'),
+            new \DateTime('tomorrow 12:00')
+        ));
+
+        
+    
+        return $this->render('product/calendar.html.twig', [
+            'calendar' => $calendarEvent,
+            
+        ]);
+
+      //  $now = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
+        // $calendarEvent = new CalendarEvent($now);
+
+        // // You can add events to the calendar using the addEvent method
+        // $calendarEvent->addEvent(new Event(
+        //     'Event 1',
+        //     new \DateTime('Tuesday this week'),
+        //     new \DateTime('Wednesday this week')
+        // ));
+
+        // $calendarEvent->addEvent(new Event(
+        //     'All day event',
+        //     new \DateTime('Friday this week')
+        // ));
+
+        // return $this->render('product/calendar.html.twig', [
+        //     'calendar' => $calendarEvent,
+        // ]);
+
+    }
+
+
+    
+    #[Route('/qr-code/{id}', name: 'product_qr_code', methods: ['GET'])]
+    public function showQrCode(Product $product): Response
+    {
+        
+        $qrCodeUrl = $product->getUrl();
+            
+    
+        $writer = new PngWriter();
+        $qrCode = QrCode::create($qrCodeUrl)
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(120)
+            ->setMargin(0)
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        // $logo = Logo::create('public/assets/img/logo.png')
+        //     ->setResizeToWidth(60);
+        $logoPath = $this->getParameter('kernel.project_dir') . '/public/assets/img/products/logo.png';
+        if (file_exists($logoPath)) {
+            $logo = Logo::create($logoPath)->setResizeToWidth(60);
+        } else {
+            $logo = null;
+        }
+
+        $label = Label::create('')->setFont(new NotoSans(8));
+ 
+        $qrCodes = [];
+        $qrCodes['img'] = $writer->write($qrCode, $logo)->getDataUri();
+        $qrCodes['simple'] = $writer->write(
+                                $qrCode,
+                                null,
+                                $label->setText('Simple')
+                            )->getDataUri();
+ 
+        $qrCode->setForegroundColor(new Color(255, 0, 0));
+        $qrCodes['changeColor'] = $writer->write(
+            $qrCode,
+            null,
+            $label->setText('Color Change')
+        )->getDataUri();
+ 
+        $qrCode->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 0, 0));
+        $qrCodes['changeBgColor'] = $writer->write(
+            $qrCode,
+            null,
+            $label->setText('Background Color Change')
+        )->getDataUri();
+ 
+        $qrCode->setSize(200)->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 255, 255));
+        $qrCodes['withImage'] = $writer->write(
+            $qrCode,
+            $logo,
+            $label->setText('With Image')->setFont(new NotoSans(20))
+        )->getDataUri();
+ 
+        return $this->render('product/QRcode.html.twig', $qrCodes);
+        return $this->render('product/QRcode.html.twig', [
+                    'product' => $product,
+                    'qrCodeData' => $qrCodeData,
+                ]);
+    }
+
+    
+   
+
+
+
+    #[Route('/search', name: 'search')]
+    public function serach(): Response
+    {
+        return $this->render('product/search.html.twig', [
+            'controller_name' => 'homeController',
+        ]);
+    }
+
+
+  #[Route('/searchP', name: 'searchProducts', methods: ['GET'])]
+    public function searchy(ProductRepository $productRepository,CategoryRepository $categoryRepository, Request $request): Response
+    {
+        $categories = $categoryRepository->findAll();
+        $categoryName = $request->query->get('category');
+        $categoryNames = $this->getDoctrine()->getRepository(Category::class)->createQueryBuilder('c')
+        ->select('c.nom')
+        ->orderBy('c.nom', 'ASC')
+        ->getQuery();
+
+
+        $searchTerm = $request->query->get('q');
+        $products = $productRepository->createQueryBuilder('p')
+            ->where('p.nom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+            //  $productRepository->findAll();
+
+
+
+
+
+
+
+
+           
+            $ranges = [];
+            
+        
+
+
+
+
+
+
+
+
+        return $this->render('product/search.html.twig', [
+            'products' => $products,
+            'searchTerm' => $searchTerm,
+            'categoryNames' => $categoryNames,
+            'categories' => $categories,
+            'ranges' => $ranges
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+    #[Route('/sortP', name: 'sortProducts', methods: ['GET'])]
+    public function sortProduct(ProductRepository $productRepository,CategoryRepository $categoryRepository, Request $request): Response
+    {
+        $categories = $categoryRepository->findAll();
+        $categoryName = $request->query->get('category');
+        $categoryNames = $this->getDoctrine()->getRepository(Category::class)->createQueryBuilder('c')
+        ->select('c.nom')
+        ->orderBy('c.nom', 'ASC')
+        ->getQuery();
+
+
+        $searchTerm = $request->query->get('q');
+        $products = $productRepository->createQueryBuilder('p')
+            ->where('p.nom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+            //  $productRepository->findAll();
+
+
+
+
+
+
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            // Fetch all products from the database
+            $products = $em->getRepository(Product::class)->findAll();
+        
+            // Sort the products by price
+            usort($products, function ($a, $b) {
+                return $a->getPrix() - $b->getPrix();
+            });
+        
+            // Group the products by price range
+            $ranges = [];
+            $minPrice = 0;
+            $maxPrice = 0;
+        
+            foreach ($products as $product) {
+                if ($product->getPrix() < $minPrice || $minPrice == 0) {
+                    $minPrice = $product->getPrix();
+                }
+        
+                if ($product->getPrix() > $maxPrice) {
+                    $maxPrice = $product->getPrix();
+                }
+        
+                $rangeIndex = floor($product->getPrix() / 100);
+        
+                if (!isset($ranges[$rangeIndex])) {
+                    $ranges[$rangeIndex] = [
+                        'min' => $rangeIndex * 100,
+                        'max' => ($rangeIndex + 1) * 100 - 1,
+                        'products' => []
+                    ];
+                }
+        
+                $ranges[$rangeIndex]['products'][] = $product;
+            }
+
+
+
+
+
+
+
+
+
+        return $this->render('product/search.html.twig', [
+            'products' => $products,
+            'searchTerm' => $searchTerm,
+            'categoryNames' => $categoryNames,
+            'categories' => $categories,
+            'ranges' => $ranges
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/category/{category_id}', name: 'products_by_category')]
+    public function filter(CategoryRepository $categoryRepository, $category_id, Request $request, ProductRepository $productRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        $searchTerm = $request->query->get('q');
+        $products = $productRepository->createQueryBuilder('p')
+        ->where('p.nom LIKE :searchTerm')
+        ->setParameter('searchTerm', '%' . $searchTerm . '%')
+        ->getQuery()
+        ->getResult();
+        
+        $category = $categoryRepository->find($category_id);
+
+    if (!$category) {
+        throw $this->createNotFoundException('The category does not exist');
+    }
+
+    $products = $category->getProducts();
+
+    $ranges = [];
+
+    return $this->render('product/search.html.twig', [
+        'products' => $products,
+        'searchTerm' => $searchTerm,
+        'categories' => $categories,
+        'ranges' => $ranges,
+    ]);
+
+    }
+    
+
+
+#[Route('/prodlist', name: 'product_list')]
+public function productListSorted( ProductRepository $productRepository): Response
+{
+
+    // Fetch all products from the database
+    $products = $productRepository->findAll();
+
+     // Sort the products by price
+     usort($products, function ($a, $b) {
+        return $a->getPrix() - $b->getPrix();
+    });
+
+    // Group the products by price range
+    $ranges = [];
+    $minPrice = 0;
+    $maxPrice = 0;
+
+
+    foreach ($products as $product) {
+        if ($product->getPrix() < $minPrice || $minPrice == 0) {
+            $minPrice = $product->getPrix();
+        }
+
+        if ($product->getPrix() > $maxPrice) {
+            $maxPrice = $product->getPrix();
+        }
+
+        $rangeIndex = floor($product->getPrix() / 100);
+
+        if (!isset($ranges[$rangeIndex])) {
+            $ranges[$rangeIndex] = [
+                'min' => $rangeIndex * 100,
+                'max' => ($rangeIndex + 1) * 100 - 1,
+                'products' => []
+            ];
+        }
+
+        $ranges[$rangeIndex]['products'][] = $product;
+    }
+
+     
+    // return $this->redirectToRoute('searchProducts', [], Response::HTTP_SEE_OTHER);
+  
+    // Pass the sorted products to your template
+    return $this->render('product/search.html.twig', [
+        'products' => $products,
+        'ranges' => $ranges,
+
+    ]);
+}
+
+
 
     #[Route('/homeAdmin', name: 'prod_cat_col')]
     public function indexfrontAdmin(): Response
@@ -65,15 +491,19 @@ class ProductController extends AbstractController
     #[Route('/shop.html ', name: 'shop')]
     public function indexshop(): Response
     {
+       
+
         return $this->render('product/shop.html.twig', [
             'controller_name' => 'shopController',
         ]);
+
     }
     #[Route('/listproduct ', name: 'listproduct')]
     public function listprod(ProductRepository $productRepository): Response
     {
         return $this->render('productAdmin/products.html.twig', [
             'products' => $productRepository->findAll(),
+           
         ]);
     }
     
@@ -130,11 +560,25 @@ class ProductController extends AbstractController
 
 
     #[Route('/shop.html', name: 'shop', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
+        $searchTerm = $request->query->get('q');
+        $products = $productRepository->createQueryBuilder('p')
+            ->where('p.nom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+            //  $productRepository->findAll();
+
         return $this->render('product/shop.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
+            'searchTerm' => $searchTerm,
+            
         ]);
+
+    //    return $this->render('product/shop.html.twig', [
+    //         'products' => $productRepository->findAll(),
+    //     ]);
     }
 
 
@@ -147,6 +591,7 @@ class ProductController extends AbstractController
     // }
 
 
+//FRONT
  #[Route('/addProduct.html', name: 'addProduct', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository ): Response
     {
@@ -155,6 +600,27 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+      
+
+
+            $file = $form->get('img')->getData();
+
+            $fileName = uniqid().'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // Handle exception
+            }
+
+            // Set the file name to the product entity
+            $product->setImg($fileName);
+
+
+
 
        $productRepository->save($product, true);
 
@@ -167,7 +633,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-
+//BACK
     #[Route('/prodformAdmin', name: 'prodformAdmin', methods: ['GET', 'POST'])]
     public function new1(Request $request, ProductRepository $productRepository ): Response
     {
@@ -187,6 +653,12 @@ class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+
+
+
+   
 
     
    
@@ -344,4 +816,34 @@ class ProductController extends AbstractController
 
     //     return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     // }
+
+
+
+
+//FRONT
+    // #[Route('/search', name: 'search_products', methods: ['GET', 'POST'])]
+    // public function search(Request $request)
+    // {
+    //     $searchTerm = $request->query->get('q');
+
+    //     $entityManager = $this->getDoctrine()->getManager();
+    //     $products = $entityManager->getRepository(Product::class)->createQueryBuilder('p')
+    //         ->where('p.name LIKE :searchTerm')
+    //         ->setParameter('searchTerm', '%' . $searchTerm . '%')
+    //         ->getQuery()
+    //         ->getResult();
+
+    //     return $this->render('product/shop.html.twig', [
+    //         'products' => $products,
+    //         'searchTerm' => $searchTerm,
+    //     ]);
+    // }
+   
+
+    
+  
+
 }
+
+
+
