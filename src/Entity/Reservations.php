@@ -24,6 +24,7 @@ class Reservations
     private $idRes;
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]
+    
     private ?Events $idEvent = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]

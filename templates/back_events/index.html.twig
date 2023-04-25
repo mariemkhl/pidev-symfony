@@ -9,6 +9,7 @@
 }
 
 </style>
+ <input type="text" id="search" class="form-control" placeholder="Search">
     <main class="content">
         <div class="container-fluid p-0">
             <h1>Events</h1>
@@ -57,7 +58,18 @@
 
             
                
-            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
         </div>
     </main>
 {% endblock %}
