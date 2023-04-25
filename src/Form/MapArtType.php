@@ -6,7 +6,7 @@ use App\Entity\MapArt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Vich\UploaderBundle\Form\Type\VichFileType;
 class MapArtType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -15,7 +15,7 @@ class MapArtType extends AbstractType
             ->add('nomplace')
             ->add('description')
             ->add('lien')
-            ->add('image')
+            ->add('imageFile', VichFileType::class)
             ->add('nblikes',HiddenType::class)
             ->add('latitude',HiddenType::class)
             ->add('longitude',HiddenType::class)

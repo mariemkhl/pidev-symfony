@@ -19,6 +19,19 @@
     {{ parent() }}
     
     <style>
+	 
+      .error-message {
+        position: fixed;
+        top: 450px;
+        left: 0;
+        width: 70%;
+        background-color: red;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        display: none;
+      }
+    
 	.titre{
 		top:90px;
      margin-top:40px;
@@ -62,7 +75,8 @@
     </div>
     <!--PreLoader Ends-->
 	
-	<!-- header -->
+	<!-- header --><div  id="player" ></div>
+ 
 	<div class="top-header-area" id="sticker">
 		<div class="container">
 			<div class="row">
@@ -158,6 +172,15 @@
 		<div class="titre">
 			<h1 style="font-family:serif;text-align:center">CHOOSE YOUR NEXT ARTISTIC DESTINATION</h1>
 			</div>
+			<div style ="position :relative; left:350px;top:90px;">
+			<h4 style="font-family:serif;text-align:left;position :relative; left:30px;">play music</h4>
+			<input type="text" id="textInput">
+			<button class="btn" onclick="loadClient().then(execute)" style="border-radius: 12px; background-color: #4CAF50;">play</button>
+    <button  class="btn"onclick="playVideo()" style="border-radius: 12px; background-color: #4CAF50;">play again</button>
+   
+  <button class="btn" onclick="stopVideo()" style="border-radius: 12px; background-color: #4CAF50;">Stop playing</button>
+			</div>
+			 <div class="error-message" id="errorMessage"></div>
 				    <div class= "formulaire">
 					 
 					 {{ form_start(form) }}
@@ -165,11 +188,13 @@
       <div style="margin-top:20px">{{ form_label(form.nomplace)}}
    {{form_widget(form.nomplace)}}
    
-    <span style="color: #ff0000;">{{form_errors(form.nomplace,) }}</span>
+    <span style="color: #ff0000;">{{form_errors(form.nomplace) }}</span>
 	</div>
    <div style="margin-top:20px"> {{ form_row(form.description)}}</div>
    <div style="margin-top:20px;margin-left:47px;"> {{ form_row(form.lien)}}</div>
-   <div style="margin-top:20px;margin-left:34px;"> {{ form_row(form.image )}}</div>
+   <div onClick="checkimage()" style="margin-top:20px;margin-left:34px;" > {{ form_row(form.imageFile,{'id': 'fileInput'} )}}</div>
+   
+
   <div style="margin-top:20px">  {{ form_row(form.nblikes )}} </div>
   <div style="margin-top:10px"> {{form_widget(form.latitude,{'id': 'lat'})}}</div>
    <div style="margin-top:10px"> {{ form_row(form.longitude,{'id': 'long'})}}</div>
@@ -178,7 +203,7 @@
     <span style="color: #ff0000;">{{form_errors(form.categorie) }}</span></div>
     <button class="btn" style="border-radius: 12px; background-color: #4CAF50;">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-
+ 
 					 </div>
 					 
 					<div id="maCarte"></div>
@@ -253,7 +278,7 @@
 						<p>Subscribe to our mailing list to get the latest updates.</p>
 						<form action="index.html">
 							<input type="email" placeholder="Email">
-							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+							<button onClick="checkimage()" type="submit"><i class="fas fa-paper-plane"></i></button>
 						</form>
 					</div>
 				</div>
@@ -310,6 +335,10 @@
    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 		{% block javascripts %}
+		<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+    <script src="{{asset('../assets/js/youtube.js')}}"></script>
+    <script src="{{asset('../assets/js/clarifaiapi.js')}}"> </script>
         <script>
            
             var tableauMarqueurs = [];
@@ -334,7 +363,7 @@
               {%for markers in marks %}
 			  var marqueur = L.marker([{{markers.latitude}},{{markers.longitude}}], {icon: icone}); 
 			  tableauMarqueurs.push(marqueur);
-			  marqueur.bindPopup("<p>"+'{{markers.nomplace}}'+"</p>"+"<a href='{{path('mapupdate',{'id':markers.id})}}'>"+'like'+"</a>"+'      '+"<a href='{{path('likedelete',{'id':markers.id})}}'>"+'dislike'+"</a>"+"<br>"+"<a href='{{path('mapdelete',{'id':markers.id})}}'>"+'delete'+"</a>");
+			  marqueur.bindPopup("<p>"+'{{markers.nomplace}}'+"</p>"+"<img src='assets/img/"+'{{markers.image}}'+"'>"+"<a href='{{path('mapupdate',{'id':markers.id})}}'>"+'like'+"</a>"+'      '+"<a href='{{path('likedelete',{'id':markers.id})}}'>"+'dislike'+"</a>"+"<br>"+"<a href='{{path('mapdelete',{'id':markers.id})}}'>"+'delete'+"</a>");
 			  carte.addLayer(marqueur);
 			  
 			  {%endfor%}

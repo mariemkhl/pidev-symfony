@@ -1,0 +1,15 @@
+# config/packages/vich_uploader.yaml or app/config/config.yml
+vich_uploader:
+    db_driver: orm
+    
+    metadata:
+        type: annotation
+
+    mappings:
+        products:
+            uri_prefix: /assets/img
+            upload_destination: '%kernel.project_dir%/public/assets/img'
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
