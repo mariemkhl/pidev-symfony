@@ -3,6 +3,8 @@
 {% block title %}New Article{% endblock %}
 
 {% block body %}
+
+
   {%block PreLoader %}
      <div class="loader">
         <div class="loader-inner">
@@ -51,7 +53,38 @@
                             {{ form_widget(form.categoryArticle, { 'attr': {'class': 'form-control'} }) }}
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <div class="form-group">
+
+                      <button type="submit" class="btn btn-primary">Create</button>
+
+                      <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Back to list</a>
+                     </div>
+
+<button type="submit" class="btn btn-primary" id="share-on-facebook">Share on Facebook</button>
+
+<script>
+  $(document).ready(function() {
+    $('#share-on-facebook').click(function(e) {
+      e.preventDefault();
+
+      // Get the article ID
+      var idArticle = {{ article.idArticle }};
+
+      // Make an AJAX call to the postArticleOnFacebook route
+      $.ajax({
+        url: '/article/' + idArticle + '/share-on-facebook',
+        method: 'POST',
+        success: function(response) {
+          alert('Article shared on Facebook!');
+        },
+        error: function(xhr, status, error) {
+          alert('Error sharing article on Facebook!');
+        }
+      });
+    });
+  });
+</script>
+
                     {{ form_end(form) }}
                 </div>
             </div>

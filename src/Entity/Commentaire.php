@@ -6,6 +6,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommentaireRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+// use Symfony\Component\Validator\Constraints\DateTime;
+
 /**
  * Commentaire
  *
@@ -44,9 +46,10 @@ class Commentaire
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="date_commentaire", type="date", nullable=true)
+     * @ORM\Column(name="date_commentaire", type="date", nullable=true,options={"default": "CURRENT_TIMESTAMP"})
      */
     private $dateCommentaire;
+    
 
     /**
      * @var int
@@ -73,6 +76,11 @@ class Commentaire
 
     private $idUser;
 
+
+    // public function __construct()
+    // {
+    //     $this->dateCommentaire = new DateTime();
+    // }
     
 
     public function getIdCommentaire(): ?int

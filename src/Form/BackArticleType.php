@@ -31,7 +31,7 @@ class BackArticleType extends AbstractType
                 'required' => false,
             ])
             ->add('categoryArticle')
-            ->add('iduser')
+            // ->add('iduser')
         ;
     }
 

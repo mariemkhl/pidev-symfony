@@ -42,25 +42,107 @@
     height: auto; /* set the image height to auto to maintain aspect ratio */
 }
 
+ .form-control {
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        {# padding: 15px; #}
+        {# font-size: 20px; #}
+    }
+     
+    .btn {
+        border-radius: 20px;
+        border: none;
+        padding: 5px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #007bff;
+        color: #fff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s ease-in-out;
+    }
+    
+    .btn:hover {
+        background-color: #0062cc;
+    }
+    .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+
 
     </style>
+
+    
+
+
+  
+
+
+
      <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <form method="get" action="{{ path('app_article_search') }}">
-                    <div class="input-group mb-3">
-                        
-                <input class="form-control mr-sm-2" type="search" placeholder="Search articles" aria-label="Search" name="q">
-                
-            
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
-                        </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="get" action="{{ path('app_article_search') }}">
+                <div class="input-group mb-3">
+                    <input class="form-control" type="search" placeholder="Search articles" aria-label="Search" name="q">
+                    
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form method="get" action="{{ path('app_article_category') }}">
+                <div class="input-group mb-3">
+                    <select class="form-control mr-sm-2" name="categoryArticle">
+                        <option value="">-- Select a category --</option>
+                        <option value="">All</option>
+                        <option value="Graffiti/Street Art">Graffiti/Street Art</option>
+                        <option value="Street Art">Street Art</option>
+                        <option value="Art History">Art History</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Filter</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
+
+
+   {# <div class="row">
+  <div class="col-md-3">
+    {% if categoryArticle is defined %}
+    <a href="{{ path('app_article_category')}}"></a>
+    
+    {% endif %}
+
+    <form method="get">
+      <div class="form-group">
+        <label for="category">Filter by category:</label>
+        <select id="category" name="category" class="form-control">
+          <option value="">All</option>
+          <option value="Graffiti/Street Art">Graffiti/Street Art</option>
+          <option value="Street Art">Street Art</option>
+          <option value="Art History">Art History</option>
+        </select>
+      </div>
+       <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">filter</button>
+                        </div>
+    </form>
+  </div>
+</div> #}
+
+
 
    <div class="row">
     {% for article in articles %}
@@ -113,5 +195,7 @@
 
     <a href="{{ path('app_article_new') }}" class="btn btn-primary">Create new</a>
     
+
+
 
 {% endblock %}

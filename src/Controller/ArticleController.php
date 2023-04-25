@@ -9,9 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Annotation\ParamConverter;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Service\FacebookService;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Mpdf\Mpdf;
+
+
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -20,13 +28,28 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
         
+        
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
         ]);
         
     }
 
+    #[Route('/searcharticle', name: 'searcharticle')]
+    public function searcharticle(Request $request, ArticleRepository $articleRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $requestString = $request->get('q');
+        $articles = $articleRepository->findArticleByNom($requestString);
+    
+        $jsonContent = $serializer->serialize($articles, 'json', ['groups' => 'Article']);
+        return new JsonResponse($jsonContent, 200, [], true);
+    }
+    
 
+  
+
+  
+    
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository,Security $security): Response
@@ -111,6 +134,62 @@ public function edit(Request $request, Article $article, ArticleRepository $arti
 }
 
 
+#[Route('/listp', name: 'article_list', methods: ['GET'])]
+    public function listp(EntityManagerInterface $entityManager): Response
+    {
+        $pdfOptions = new Options();
+         
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $articles = $entityManager
+            ->getRepository(Article::class)
+            ->findAll();
+         
+        $html = $this->renderView('article/listp.html.twig', [
+            'articles' => $articles,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+    
+        return new Response(); // Ajoutez cette ligne pour éviter l'erreur
+    }
+
+//   /**
+//       * @Route("/pdf", name="PDF_Reclamation", methods={"GET"})
+//       */
+//       public function pdf(ArticleRepository $articleRepository)
+//       {
+//           // Configure Dompdf according to your needs
+//           $pdfOptions = new Options();
+//           $pdfOptions->set('defaultFont', 'Arial');
+  
+//           // Instantiate Dompdf with our options
+//           $dompdf = new Dompdf($pdfOptions);
+//           // Retrieve the HTML generated in our twig file
+//           $html = $this->renderView('article/pdf.html.twig', [
+//               'articles' =>  $ArticleRepository->findAll(),
+//           ]);
+  
+//           // Load HTML to Dompdf
+//           $dompdf->loadHtml($html);
+//           // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+//           $dompdf->setPaper('A4', 'portrait');
+  
+//           // Render the HTML as PDF
+//           $dompdf->render();
+//           // Output the generated PDF to Browser (inline view)
+//           $dompdf->stream("ListeDesreclmations.pdf", [
+//               "articles" => true
+//           ]);
+//       }
+ 
+
+
+
     #[Route('/{idArticle}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
@@ -140,6 +219,46 @@ public function search(Request $request, ArticleRepository $articleRepository): 
         'articles' => $articles,
     ]);
 }
+
+ 
+#[Route('/article/findByCategory', name: 'app_article_category', methods: ['GET'])]
+public function findByCategory(Request $request, ArticleRepository $articleRepository): Response
+{
+    $categoryArticle = $request->query->get('categoryArticle');
+
+    if ($categoryArticle) {
+        $articles = $articleRepository->findBy(['categoryArticle' => $categoryArticle]);
+    } else {
+        $articles = $articleRepository->findAll();
+    }
+
+    return $this->render('article/index.html.twig', [
+        'articles' => $articles,
+    ]);
+}
+/**
+ * @Route("/article/{id}/share-on-facebook", name="app_share_on_facebook")
+ */
+public function shareOnFacebook(FacebookService $facebookService, Article $article)
+{
+    $message = $article->getTitreArticle() . "\n" . $article->getContentArticle();
+    $postId = $facebookService->postArticle($article->getUrl(), $message);
+
+    return $this->redirectToRoute('app_article_index');
+}
+     
+
+
+
+// public function postArticleOnFacebook(FacebookService $facebookService)
+// {
+//     // $articleUrl = 'https://example.com/article';
+//     $message = $p->getTitreArticle() . "\n" . $p->getContentArticle();
+//     $postId = $facebookService->postArticle( $message);
+//      return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+// }
+
+
 
 
 

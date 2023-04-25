@@ -28,7 +28,7 @@ class BackCommentaireController extends AbstractController
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_back_index');
+            return $this->redirectToRoute('app_back_commentaire');
         }
 
         return $this->render('back_commentaire/index.html.twig', [
@@ -36,17 +36,42 @@ class BackCommentaireController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/back/commentaire/{idCommentaire}', name: 'app_commentaire_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Commentaire $commentaire): Response
+
+    /**
+     * @Route("/back/commentaires/{idCommentaire}", name="app_editback_commentaire", defaults={"idCommentaire": null})
+     */
+    public function createOrEdit(Request $request, ?int $idCommentaire): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commentaire->getIdCommentaire(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($commentaire);
-            $entityManager->flush();
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $idCommentaire ? $em->getRepository(Commentaire::class)->find($idCommentaire) : new Commentaire();
+        $form = $this->createForm(BackCommentaireType::class, $commentaire);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('app_back_commentaire');
         }
-    
-        return $this->redirectToRoute('app_back_commentaire');
+
+        return $this->render('back_commentaire/editcomment.html.twig', [
+            'form' => $form->createView(),
+            'commentaire' => $commentaire,
+        ]);
     }
+
+     #[Route('/back/commentaire/{idCommentaire}', name: 'app_commentaire_deleteback', methods: ['POST'])]
+     public function deleteback(Request $request, Commentaire $commentaire,CommentaireRepository $commentaireRepository): Response
+     {
+         if ($this->isCsrfTokenValid('delete'.$commentaire->getIdCommentaire(), $request->request->get('_token'))) {
+            
+             $commentaireRepository->remove($commentaire, true);
+         }
+
+     return $this->redirectToRoute('app_back_commentaire', [], Response::HTTP_SEE_OTHER);
+        
+     }
     
    
     

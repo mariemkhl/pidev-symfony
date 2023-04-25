@@ -37,25 +37,51 @@ class CommentaireController extends AbstractController
     }
 
 
+   #[Route('/reply/{idCommentaire}', name: 'app_commentaire_reply', methods: ['GET', 'POST'])]
+public function reply(Request $request, CommentaireRepository $commentaireRepository, int $idCommentaire): Response
+{
+    // Fetch the parent comment
+    $parentComment = $commentaireRepository->find($idCommentaire);
+    
+    // Create a new comment as a reply to the parent comment
+    $commentaire = new Commentaire();
+    $commentaire->setParentComment($parentComment); // set the parent comment
+    $commentaire->setIdArticle($parentComment->getIdArticle()); // set the idArticle
+    $form = $this->createForm(CommentaireType::class, $commentaire);
+    $form->handleRequest($request);
 
-    #[Route('/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentaireRepository $commentaireRepository): Response
+    if ($form->isSubmitted() && $form->isValid()) {
+        $commentaireRepository->save($commentaire, true);
+
+        return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    return $this->renderForm('commentaire/new.html.twig', [
+        'commentaire' => $commentaire,
+        'form' => $form,
+    ]);
+}
+
+    #[Route('/new/{idArticle}', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CommentaireRepository $commentaireRepository, int $idArticle): Response
     {
         $commentaire = new Commentaire();
+        $commentaire->setIdArticle($idArticle); // set the idArticle
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $commentaireRepository->save($commentaire, true);
-
+    
             return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('commentaire/new.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{idCommentaire}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
@@ -91,5 +117,7 @@ class CommentaireController extends AbstractController
         }
 
         return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+
+        
     }
 }

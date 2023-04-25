@@ -38,15 +38,42 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findArticleByNom($titreArticle)
+    {
+        return $this->createQueryBuilder('evenement')
+            ->where('evenement.titreArticle LIKE  :titreArticle')
+            ->setParameter('titreArticle', '%'.$titreArticle. '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findEvenementByNom($nom)
+    {
+        return $this->createQueryBuilder('evenement')
+            ->where('evenement.nom LIKE  :nom')
+            ->setParameter('nom', '%'.$nom. '%')
+            ->getQuery()
+            ->getResult();
+    }
 
-    public function searchByTitle(string $searchTerm): array
+
+//     public function searchByTitle(string $searchTerm): array
+// {
+//     $qb = $this->createQueryBuilder('a')
+//         ->where('a.titreArticle LIKE :searchTerm')
+//         ->setParameter('searchTerm', '%'.$searchTerm.'%')
+//         ->getQuery();
+
+//     return $qb->getResult();
+// }
+
+public function findByCategory($categoryArticle)
 {
-    $qb = $this->createQueryBuilder('a')
-        ->where('a.titreArticle LIKE :searchTerm')
-        ->setParameter('searchTerm', '%'.$searchTerm.'%')
-        ->getQuery();
-
-    return $qb->getResult();
+    
+    return $this->createQueryBuilder('a')
+        ->andWhere('a.categoryArticle = :categoryArticle')
+        ->setParameter('categoryArticle, $categoryArticle')
+        ->getQuery()
+        ->getResult();
 }
 
 

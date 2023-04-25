@@ -1,0 +1,33 @@
+{% block body %}
+
+<h1 align= "center" > Liste des articles </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>titreArticle</th>
+                <th>imageArticle</th>
+                
+                <th>contentArticle</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for article in articles %}
+            <tr>
+                
+                <td>{{ article.titreArticle }}</td>
+                <td>{{ article.imageArticle }}</td>
+                
+                <td>{{ article.contentArticle }}</td>
+                
+                
+            </tr>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

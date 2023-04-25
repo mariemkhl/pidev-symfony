@@ -159,7 +159,7 @@ class Article
         return $this;
     }
 
-    public function getIduser(): ?Utilisateur
+    public function getIduser(): ?int 
     {
         return $this->iduser;
     }

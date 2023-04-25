@@ -9,6 +9,8 @@
 }
 
 </style>
+<canvas id="myChart"></canvas>
+<input type="text" id="search" class="form-control" placeholder="Search">
     <main class="content">
         <div class="container-fluid p-0">
             <h1>Articles</h1>
@@ -57,4 +59,65 @@
             </div>
         </div>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<script>
+    // Get the counts data from PHP
+    const counts = {{ counts|json_encode|raw }};
+
+    // Get the canvas element and create the chart
+    const canvas = document.getElementById('myChart').getContext('2d');
+    const chart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(counts),
+            datasets: [{
+                label: 'Counts',
+                data: Object.values(counts),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 {% endblock %}

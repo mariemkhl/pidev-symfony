@@ -1,5 +1,4 @@
 {% extends 'back.html.twig' %}
-
 {% block title %}
     {% if commentaire.idCommentaire is not null %}
         Edit Commentaire {{ commentaire.idCommentaire }}
@@ -7,7 +6,6 @@
         Create New Commentaire
     {% endif %}
 {% endblock %}
-
 {% block body %}
     <div class="container">
         <h1 class="my-5">{% if commentaire.idCommentaire is not null %}Edit Commentaire{% else %}Create New Commentaire{% endif %}</h1>

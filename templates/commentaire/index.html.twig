@@ -1,46 +1,75 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Commentaire index{% endblock %}
 
 {% block body %}
-    <h3>Comments</h3>
+<style>
 
-    <div class="row">
+
+</style>
+<div class="comments-list-wrap">
+<div class="comments-list-wrap">
+    <h3 class="comment-count-title">{{ commentaires|length }} Comments</h3>
+    <div class="comment-list">
         {% for commentaire in commentaires %}
-        <div class="col-md-8 offset-md-2">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ commentaire.idUser }}</h5>
-                    <p class="card-text">{{ commentaire.contentCommentaire }}</p>
-                    <p class="card-text"><small class="text-muted">{{ commentaire.dateCommentaire ? commentaire.dateCommentaire|date('Y-m-d H:i:s') : '' }}</small></p>
-                    <a href="{{ path('app_commentaire_show', {'idCommentaire': commentaire.idCommentaire}) }}" class="card-link">Show</a>
-                    <a href="{{ path('app_commentaire_edit', {'idCommentaire': commentaire.idCommentaire}) }}" class="card-link">Edit</a>
-                </div>
+        <div class="single-comment-body">
+            <div class="comment-user-avatar">
+                <img src="{{ asset('path/to/avatar1.png') }}" alt="">
+            </div>
+            <div class="comment-text-body">
+                <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
+
+                <p>{{ commentaire.contentCommentaire }}</p>
+                {# <div class="comment-actions">
+                    <a href="{{ path('app_commentaire_show', {'idCommentaire': commentaire.idCommentaire}) }}" class="btn btn-sm btn-primary">Show</a>
+                    <a href="{{ path('app_commentaire_edit', {'idCommentaire': commentaire.idCommentaire}) }}" class="btn btn-sm btn-secondary">Edit</a>
+                </div> #}
             </div>
         </div>
-        {% else %}
-        <div class="col-md-8 offset-md-2">
-            <p>No comments yet. Be the first to leave a comment!</p>
+        <div class="single-comment-body child">
+            <div class="comment-user-avatar">
+                <img src="{{ asset('path/to/avatar.png') }}" alt="User Avatar">
+            </div>
+            <div class="comment-text-body">
+                <h6>Your Name <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
+</h6>
+                <form action="{{ path('app_commentaire_reply', {'idCommentaire': commentaire.idCommentaire}) }}" method="POST">
+                    <div class="form-group">
+                        <textarea name="contentCommentaire" class="form-control" placeholder="Reply to this comment"></textarea>
+                    </div>
+                <div class="form-group">
+    <input type="submit" value="Reply" class="btn btn-sm small-btn">
+</div>
+
+                </form>
+            </div>
         </div>
         {% endfor %}
     </div>
+</div>
 
-    <div class="row">
+
+ 
+
+
+<div class="row">
     <div class="col-md-8 offset-md-2">
-        <h4>Leave a comment</h4>
-        {{ form_start(form) }}
-       
+        <h4 class="mb-4">Leave a comment</h4>
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+
         <div class="form-group row">
             {{ form_label(form.contentCommentaire, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
             <div class="col-md-9">
-                {{ form_widget(form.contentCommentaire, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.contentCommentaire, {'attr': {'class': 'form-control', 'placeholder': 'Your comment', 'rows': '5', 'required': ''}}) }}
+                <div class="invalid-feedback">
+                    Please enter your comment.
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-9 offset-md-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
+
+        <p><input type="submit" value="Submit"></p>
+
         {{ form_end(form) }}
     </div>
 </div>

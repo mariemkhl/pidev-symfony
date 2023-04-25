@@ -18,6 +18,7 @@
 
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 {% block sidebar %}
@@ -115,9 +116,11 @@
 				</ul>
 
 			</div>
-			{% block navbar %}
+			
 		</nav>
-            
+		{% endblock %}
+
+         {% block navbar %}   
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
@@ -279,14 +282,14 @@
 					</ul>
 				</div>
 			</nav>
-            {% block body %}
-           
-            {% endblock %}
+            
         {% endblock %}
 
 
-    {% endblock %}
-
+    
+{% block body %}
+           
+            {% endblock %}
     
 
 			
