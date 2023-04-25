@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>PDR RESERVATIONS</title>
+<body>
+
+   
+         <h1 style="text-align:center; text-decoration:underline; color:green;">Booking Ticket</h1>
+
+    <p>Dear Client <strong></strong></p>
+    <p>your reservation has been made successfully <strong>{{ reservation.idRes}}</strong> Thank you for your participation.</p>
+    <p>your reservation is for the following event <strong> {{ reservation.idEvent.nameev}} </strong> with date   <strong> {{ reservation.datere}} </strong></p><br><br>
+    
+    
+    <p>Have a great day</p><br><br>
+     <p>Enjoy</p><br><br>
+    
+    <br><br><br><p style="text-align: right;"> :</p>
+
+</body>
+
+</html>

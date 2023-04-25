@@ -1,0 +1,63 @@
+{% extends 'back.html.twig' %}
+
+{% block body %}
+<style> 
+.event-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; 
+}
+
+</style>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <h1>Events</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in pagination %}
+                            <tr>
+                                <td>{{ event.idEvent }}</td>
+                                <td>  <img src="{{asset('images/events/' ~ event.img )}}" class="event-image img-fluid" alt="{{ event.nameev }}"></td>
+                                <td>{{ event.nameev }}</td>
+                                <td>{{ event.description }}</td>
+                                <td>
+                                    
+                                    <a href="{{ path('app_events_editback', {'idEvent': event.idEvent}) }}" class="btn btn-secondary btn-sm btn-block">Edit </a>
+
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">No records found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+<div class="d-flex justify-content-between">
+
+  
+    <a href="{{ path('app_events_newback') }}" class="btn btn-primary">New Events</a>
+</div>
+ <div class=' pagination page-item page-link'>
+									{{ knp_pagination_render(pagination) }}
+								</div> 
+
+            
+               
+            
+        </div>
+    </main>
+{% endblock %}

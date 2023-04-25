@@ -21,7 +21,7 @@
                         </div>
                     <div class="form-group">
                      {% if event.img %}
-                        <img src="{{ asset('uploads/' ~ event.img) }}" alt="Events Image" class="img-thumbnail">
+                        <img src="{{asset('images/events/' ~ event.img )}}" alt="Events Image" class="img-thumbnail">
                     {% endif %}
                     {{ form_label(form.img) }}
                     {{ form_widget(form.img, {'attr': {'class': 'form-control'}}) }}

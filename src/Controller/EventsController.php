@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -22,11 +22,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class EventsController extends AbstractController
 {
     #[Route('/', name: 'app_events_index', methods: ['GET'])]
-    public function index(EventsRepository $eventsRepository): Response
+    public function index(Request $request ,EventsRepository $eventsRepository, PaginatorInterface $paginator): Response
     {
-        return $this->render('events/index.html.twig', [
-            'events' => $eventsRepository->findAll(),
-        ]);
+        $events = $eventsRepository->findAll();
+        $pagination = $paginator->paginate(
+        $events, $request->query->getInt('page', 1),3); // Numéro de page par défaut
+        return  $this->render('events/index.html.twig', [
+           'pagination' => $pagination,
+      ]);
+        
     }
 
    
@@ -110,4 +114,6 @@ $event->setIdUser($utilisateur);
 
         return $this->redirectToRoute('app_events_index', [], Response::HTTP_SEE_OTHER);
     }
+   
+
 }

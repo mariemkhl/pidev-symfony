@@ -25,6 +25,7 @@
     <a href="{{ path('app_reservations_index') }}">back to list</a>
 
     <a href="{{ path('app_reservations_edit', {'idRes': reservation.idRes}) }}">edit</a>
+    <a href="{{ path('app_reservations_pdf', {'idRes': reservation.idRes}) }}" class="btn btn-success" target="_blank">Generate PDF</a>
 
     {{ include('reservations/_delete_form.html.twig') }}
 {% endblock %}

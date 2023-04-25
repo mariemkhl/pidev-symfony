@@ -39,14 +39,14 @@ class EventsRepository extends ServiceEntityRepository
         }
     }
 
-    public function findEventsByName(){
-        return $this->createQueryBuilder('e')
-                    ->orderBy('e.nameev', 'ASC')
-                    ->getQuery()
-                    ->getResult()
-                ;
+    public function findEventstByNom($nom)
+    {
+        return $this->createQueryBuilder('evenement')
+            ->where('evenement.nom LIKE  :nom')
+            ->setParameter('nom', '%'.$nom. '%')
+            ->getQuery()
+            ->getResult();
     }
-
 
 
 
