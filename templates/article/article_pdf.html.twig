@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+ {% block head %}
+    <head>
+     {% block style %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                color: #444;
+            }
+            h1 {
+                font-size: 36px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            p {
+                line-height: 1.5;
+                margin-bottom: 20px;
+                color: #555;
+            }
+            .article-image {
+                width: 100%;
+                max-width: 600px;
+                margin-bottom: 20px;
+            }
+            .article-author {
+                margin-top: 40px;
+                color: #888;
+                font-style: italic;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    {% block body %}
+    <body>
+        <h1>{{ article.titreArticle }}</h1>
+        <p>{{ article.contentArticle }}</p>
+        <div class="article-author">By Mimi, {{ article.dateArticle|date('F j, Y') }}</div>
+    </body>
+     {% endblock %}
+     {% endblock %}
+     {% endblock %}
+</html>

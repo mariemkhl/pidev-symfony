@@ -5,4 +5,8 @@ app_article_all:
     path: /article/all
     controller: App\Controller\ArticleController::all
 
+pdf_generate:
+    path: '/pdf/generate'
+    controller: App\Controller\PdfController::generate
+
 

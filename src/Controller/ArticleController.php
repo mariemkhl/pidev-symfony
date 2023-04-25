@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Mpdf\Mpdf;
+use App\Service\MyBadWordsFilter;
 
 
 
@@ -25,15 +26,28 @@ use Mpdf\Mpdf;
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository, MyBadWordsFilter $badWordsFilter): Response
     {
+        $articles = $articleRepository->findAll();
         
+        foreach ($articles as $article) {
+            //Filter the subject artical BAD WORDs :
+            $titreArticle = $article->getTitreArticle();
+            $filteredTitle = $badWordsFilter->filter($titreArticle);
+            $article->setTitreArticle($filteredTitle);
+    
+            //Filter the content artical BAD WORDs :
+            $contentArticle = $article->getContentArticle();
+            $filteredContent = $badWordsFilter->filter($contentArticle);
+            $article->setContentArticle($filteredContent);
+        }
         
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
         ]);
-        
     }
+    
+    
 
     #[Route('/searcharticle', name: 'searcharticle')]
     public function searcharticle(Request $request, ArticleRepository $articleRepository, SerializerInterface $serializer): JsonResponse
