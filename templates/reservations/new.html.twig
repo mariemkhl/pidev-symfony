@@ -3,8 +3,19 @@
 {% block title %}New Reservations{% endblock %}
 
 {% block body %}
+
+<style>
+ .btn-warning {
+  background-color: #FF8C00; /* Replace with your preferred shade of dark orange */
+  border-color: #FF8C00; /* Set the border color to match the background color */
+  border-radius: 15px;
+   width:25%;
+      margin: 15px 30px ; 
+}
+</style>
+
     
-        <h3 class= "font-italic text-center" >Create new Reservations</h3>
+        <h2 class= "font-italic text-center" >Create new Reservations</h2>
 
             <div class="row">
 						<div class="col-lg-8 offset-lg-2 text-center">
@@ -41,17 +52,20 @@
                         
                      
 
-<button type="submit" class="btn btn-primary">Create</button>
+<button type="submit" class="btn btn-warning">Create</button>
                     {{ form_end(form) }}
                     
 
 </div>
 </div>
 </div>
-						<div class="col-lg-8 offset-lg-2 text-center">
+	
+    				<div class="col-lg-8 offset-lg-2 text-center">
 
-    <a href="{{ path('app_reservations_index') }}">back to list</a>
+    <a href="{{ path('app_reservations_index') }}" class="btn btn-warning">back to list</a>
 </div>
-
+    
+    
+    				
     
 {% endblock %}

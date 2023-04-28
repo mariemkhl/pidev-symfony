@@ -5,25 +5,43 @@
 {% block body %}
     <h3></h3>
 
- <div class="row">
-    {% for reservation in reservations %}
-        <div class="col-lg-8 offset-lg-2>
-            <div class="card">
+    <style>
+ .btn-warning {
+  background-color: #FF8C00; /* Replace with your preferred shade of dark orange */
+  border-color: #FF8C00; /* Set the border color to match the background color */
+  border-radius: 15px;
+   width:10%;
+      margin: 15px 30px ; 
+}
+.card- {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+
+    {% for reservation in pagination %}
+        
+            
             <div class="card-body">
           <h5 class="card-title">{{reservation.idUser }}</h5>
               <p class="card-text">{{ reservation.idEvent }}</p>
-                 <p class="card-text">{{ reservation.name }}</p>
+                 <p class="text-center">{{ reservation.name }}</p>
 
-            <p class="card-text"><small class="text-muted">{{ reservation.datere ? reservation.datere|date('Y-m-d') : ''}}</small></p>
+          
+         <p class="text-center"><span class="date"><i class="fas fa-calendar"></i> {{ reservation.datere ? reservation.datere|date('Y-m-d') : ''}}</span></p>
+  <div class="col-md-12 text-center">
+           <br><a href="{{ path('app_reservations_show', {'idRes': reservation.idRes}) }}" class="btn btn-warning">Show</a>
+            <a href="{{ path('app_reservations_edit', {'idRes': reservation.idRes}) }}" class="btn btn-warning">Edit</a>
+</div>
 
+       
+    </div>
 
-             <a href="{{ path('app_reservations_show', {'idRes': reservation.idRes}) }}" class="btn btn-primary py-2 px-4 mt-4">Show</a>
-                    <a href="{{ path('app_reservations_edit', {'idRes': reservation.idRes}) }}" class="btn btn-primary py-2 px-4 mt-4">Edit</a>
-
-     </div>
-            </div>
-     </div>
-   
+</div>
 
     {% else %}
         <div class="col">
@@ -33,8 +51,20 @@
                 </div>
             </div>
         </div>
-
-
+ 
  {% endfor %}
-    <a href="{{ path('app_reservations_new') }}">Create new</a>
+
+  <div class=' pagination page-item page-link'>
+			{{ knp_pagination_render(pagination) }}
+				</div> 
+                 <div class="col-md-12 text-center">
+    <a href="{{ path('app_reservations_new') }}" class="btn btn-warning">Create new</a>
+
+    </div>
+    
+   </div>
+    </div>
+    </div>
+    
+ 
 {% endblock %}

@@ -11,15 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/reservations')]
 class ReservationsController extends AbstractController
 {
     #[Route('/', name: 'app_reservations_index', methods: ['GET'])]
-    public function index(ReservationsRepository $reservationsRepository): Response
+    public function index(Request $request,ReservationsRepository $reservationsRepository,PaginatorInterface $paginator): Response
     {
-        return $this->render('reservations/index.html.twig', [
-            'reservations' => $reservationsRepository->findAll(),
+        
+        $reservations = $reservationsRepository->findAll();
+            $pagination = $paginator->paginate(
+                $reservations, $request->query->getInt('page', 1),3); // Numéro de page par défaut
+                return $this->render('reservations/index.html.twig', [        
+                               'pagination' => $pagination,
         ]);
     }
 
@@ -77,6 +83,8 @@ class ReservationsController extends AbstractController
 
          return $this->redirectToRoute('app_reservations_index', [], Response::HTTP_SEE_OTHER);
      }
+
+
      #[Route('/pdf/{idRes}', name: 'app_reservations_pdf', methods: ['GET'])]
      public function pdf(Request $request, $idRes, ReservationsRepository $reservationsRepository)
      {

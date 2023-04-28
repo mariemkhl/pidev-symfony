@@ -3,32 +3,68 @@
 {% block title %}Events{% endblock %}
 
 {% block body %}
-    <h3>Events</h3>
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-12">
+		
+    <h2 class= "font-italic text-center">Events</h2>
 
-<div class="row">
-<div class="col-lg-8 offset-lg-2>
+ <style>
+ .btn-warning {
+  background-color: #FF8C00; /* Replace with your preferred shade of dark orange */
+  border-color: #FF8C00; /* Set the border color to match the background color */
+  border-radius: 15px;
+   width:25%;
+      margin: 15px 30px ; 
+}
 
-        <div class="single-article-section">
-						<div class="single-article-text">
+.card-img-container {
+    width: 100%; /* set the width to 100% to fill the card container */
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.card-img-container img {
+    width: 100%;
+    height: 100%; /* set the height to 100% to fill the container and maintain aspect ratio */
+    object-fit: cover; /* use object-fit to prevent the image from stretching or squishing */
+}
+.paraph{
+	
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+  
+  margin-bottom: 20px;
+
+}
+    </style>
+
+
+
+                         <div class="card-img-container">
 							<img src="{{asset('images/events/' ~ event.img )}}">
 
-                            <p class="blog-meta">
-								<span class="author"><i class="fas fa-user"></i> Admin</span>
-								<span class="date"><i class="fas fa-calendar"></i> {{ event.dateEvent|date('Y-m-d') }}</span>
-
-							</p>
-							<h2>{{ event.nameev }}</h2>
-							<p></p>{{ event.description }}</p>
+                           
 						</div>
-        
+							<h3>{{ event.nameev }}</h3>
+							
+						<span class="date"><i class="fas fa-calendar"></i> {{ event.dateEvent|date('Y-m-d') }}</span>
 
+						<p >{{ event.description }}</p>
+        <div class="col-lg-8 offset-lg-2 text-center">
+		<a href="{{ path('app_events_index') }}"  class="btn btn-warning">back to list</a>
+
+    <a href="{{ path('app_events_edit', {'idEvent': event.idEvent}) }}" class="btn btn-warning">edit</a>
+	             
 </div>
 </div>
 </div>
+</div>
 
-    <a href="{{ path('app_events_index') }}">back to list</a>
-
-    <a href="{{ path('app_events_edit', {'idEvent': event.idEvent}) }}">edit</a>
-
-    {{ include('events/_delete_form.html.twig') }}
+<div class="col-lg-8 offset-lg-2 text-center">
+    
+   {{ include('events/_delete_form.html.twig') }}
+  </div>
 {% endblock %}

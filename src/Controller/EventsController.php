@@ -94,6 +94,7 @@ $event->setIdUser($utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $eventsRepository->save($event, true);
 
             return $this->redirectToRoute('app_events_index', [], Response::HTTP_SEE_OTHER);
