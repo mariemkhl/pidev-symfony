@@ -19,15 +19,34 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Mpdf\Mpdf;
 use App\Service\MyBadWordsFilter;
-
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
+use App\Repository\CommentaireRepository;
+use App\Service\CommentaireService;
+// use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository, MyBadWordsFilter $badWordsFilter): Response
+    public function index(ArticleRepository $articleRepository, MyBadWordsFilter $badWordsFilter ): Response
     {
+        // $articles = $articleRepository->findAll();
+        // $articles = $paginator->paginate(
+        //     $articleRepository->findAll(),
+        //     $request->query->getInt('page', 1),
+        //     6
+        // );
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+$query = $entityManager->createQuery(
+    'SELECT a FROM App\Entity\Article a ORDER BY a.dateArticle DESC'
+);
+
+$articles = $query->getResult();
+
         $articles = $articleRepository->findAll();
         
         foreach ($articles as $article) {
@@ -103,13 +122,47 @@ class ArticleController extends AbstractController
         ]);
     }
     
+    // #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
+    // public function show(Article $article, CommentaireRepository $commentaireRepository): Response
+    // {
+    //     $commentaires = $commentaireRepository->findBy(['article' => $article]);
+    //     $commentaire = new Commentaire();
+    //     $article = $articleRepository->find($idArticle);
+    //     $form = $this->createForm(CommentaireType::class, $commentaire);
 
+    //     return $this->render('article/show.html.twig', [
+    //         'article' => $article,
+    //         'commentaires' => $commentaires,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
+    
     #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
-    {
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-        ]);
+    public function show(
+        Article $article,Request $request, CommentaireService $commentaireService,CommentaireRepository $commentaireRepository,$idArticle ): Response 
+        {
+            $commentaires = $commentaireRepository->findCommentaires($article);
+            $commentaire= new Commentaire();
+            $form =$this->createForm(CommentaireType::class,$commentaire);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $commentaire->setArticle($article);
+
+                $commentaire->setEtatCommentaire(0);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($commentaire);
+        $entityManager->flush();
+               return $this->redirectToRoute('app_article_show',['idArticle' => $article->getIdArticle()]);
+            }
+
+            return $this->render('article/show.html.twig', [
+                'article'      => $article,
+                'form'         =>$form->createView(),
+                'commentaires' =>$commentaires,
+                'base_template' => 'base.html.twig'
+            ]);
+            
+            
     }
     
 

@@ -6,6 +6,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 
 /**
  * Article
@@ -81,6 +84,19 @@ class Article
 
     #[ORM\OneToMany(mappedBy: 'idArticle', targetEntity: Commentaire::class)]
     private Collection $commentaires;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires ?? $this->commentaires = new ArrayCollection();
+    }
 
     public function getIdArticle(): ?int
     {
@@ -170,6 +186,8 @@ class Article
 
         return $this;
     }
-
-
+    
 }
+
+
+

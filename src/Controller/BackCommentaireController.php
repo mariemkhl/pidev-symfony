@@ -14,28 +14,56 @@ class BackCommentaireController extends AbstractController
 {
    
     #[Route('/back/commentaire', name: 'app_back_commentaire', methods: ['GET', 'POST'])]
-
     public function index(CommentaireRepository $commentaireRepository, Request $request): Response
     {
         $commentaires = $commentaireRepository->findAll();
-        $commentaire = new Commentaire();
-        $form = $this->createForm(BackCommentaireType::class, $commentaire);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentaire = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($commentaire);
+        $entityManager = $this->getDoctrine()->getManager();
+    
+        // Handle form submission
+        if ($request->isMethod('POST')) {
+            foreach ($commentaires as $commentaire) {
+                $id = $commentaire->getIdCommentaire();
+                $approved = $request->request->get("commentaire[$id][etatCommentaire]", false);
+                $commentaire->setEtatCommentaire($approved);
+                $entityManager->persist($commentaire);
+            }
+    
             $entityManager->flush();
-
             return $this->redirectToRoute('app_back_commentaire');
         }
-
+    
+        // Render form
+        $form = $this->createForm(BackCommentaireType::class, null, ['action' => $this->generateUrl('app_back_commentaire')]);
+    
         return $this->render('back_commentaire/index.html.twig', [
             'commentaires' => $commentaires,
             'form' => $form->createView(),
         ]);
     }
+    
+
+
+    // public function index(CommentaireRepository $commentaireRepository, Request $request): Response
+    // {
+    //     $commentaires = $commentaireRepository->findAll();
+    //     $commentaire = new Commentaire();
+    //     $form = $this->createForm(BackCommentaireType::class, $commentaire);
+
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $commentaire = $form->getData();
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->persist($commentaire);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_back_commentaire');
+    //     }
+
+    //     return $this->render('back_commentaire/index.html.twig', [
+    //         'commentaires' => $commentaires,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/back/commentaires/{idCommentaire}", name="app_editback_commentaire", defaults={"idCommentaire": null})
@@ -58,6 +86,7 @@ class BackCommentaireController extends AbstractController
         return $this->render('back_commentaire/editcomment.html.twig', [
             'form' => $form->createView(),
             'commentaire' => $commentaire,
+            
         ]);
     }
 

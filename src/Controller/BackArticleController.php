@@ -22,12 +22,17 @@ class BackArticleController extends AbstractController
     #[Route('/back/article', name: 'app_back_article', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $articles = $paginator->paginate(
-            $articleRepository->findAll(),
-            $request->query->getInt('page', 1),
-            10
-        );
-    
+
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+$query = $entityManager->createQuery(
+    'SELECT a FROM App\Entity\Article a ORDER BY a.dateArticle ASC'
+);
+
+$articles = $query->getResult();
+
+        
         $entityManager = $this->getDoctrine()->getManager();
         $now = new \DateTime();
         // Get the start of the current week (Sunday)
@@ -52,15 +57,25 @@ class BackArticleController extends AbstractController
                       ->getSingleScalarResult();
     
         $counts = [
+            
             'numArticles' => count($articles),
             'countUsers' => $countUsers,
             'weekCount' => $weekCount,
             'todayCount' => $todayCount,
         ];
+        $articles = $articleRepository->findAll();
+        $articles = $paginator->paginate(
+            $articleRepository->findAll(),
+            $request->query->getInt('page', 1),
+            6
+        );
+    
+      
         
         return $this->render('back_article/index.html.twig', [
             'articles' => $articles,
             'counts' => $counts,
+            
         ]);
     }
     

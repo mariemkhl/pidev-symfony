@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
+
+
 {% block body %}
+<style>  
+
+    .btn-primary {
+        background-color: #051922;
+        border-color: #051922;
+    }
+   
+
+</style>
   {%block PreLoader %}
      <div class="loader">
         <div class="loader-inner">
@@ -24,16 +35,76 @@
 
 							 </p>
     <h2>{{ article.titreArticle }}</h2>
-    <p>{{ article.contentArticle }}</div>
+    <p>{{ article.contentArticle }},{{ article.contentArticle }},{{ article.contentArticle }}.</div>
+	{# <p>{{ article.contentArticle }}</div> #}
+	
+<h1>
+ </h1>
+<a href="{{ path('pdf_generate') }}" class="btn btn-primary">Imprimer</a>
+<h1>
+ </h1>
+                   <h3 class="mb-0">Partager l'article :</h3>
+                                            
 
-<a href="{{ path('pdf_generate') }}" class="btn btn-primary">Télécharger en PDF</a>
+<h1> </h1>
+<div id="share-buttons">
+
+  <!-- facebook -->
+  <a class="facebook" target="blank">
+  <div class="btn btn-primary btn-square me-2"> 
+  <i class="fab fa-facebook-f fw-normal"></i>
+  </div>
+  </a>
+  
+
+
+
+  <!-- twitter -->
+
+  <a class="twitter" target="blank">
+  <div class="btn btn-primary btn-square me-2"> 
+  <i class="fab fa-twitter"></i>
+  </div>
+  </a>
+  
+
+  <!-- reddit -->
+  <a class="reddit" target="blank">
+  <div class="btn btn-primary btn-square me-2"> 
+  <i class="fab fa-reddit fw-normal"></i>
+  </div>
+  </a>
+
+
+  <!-- whatsapp-->
+  <a class="whatsapp" target="blank">
+  <div class="btn btn-primary btn-square me-2"> 
+  <i class="fab fa-whatsapp fw-normal"></i>
+  </div>
+  </a>
+
+</div>
+
+<script>
+  const link = encodeURI(window.location.href);
+  const msg = encodeURIComponent('Hey, I found this article');
+  const title = encodeURIComponent('{{ article.contentArticle }}');
+  const fb = document.querySelector('.facebook');
+  fb.href = `https://www.facebook.com/share.php?u=${link}`;
+  const twitter = document.querySelector('.twitter');
+  twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=AIDME_BLOG,symfony`;
+  const reddit = document.querySelector('.reddit');
+  reddit.href = `http://www.reddit.com/submit?url=${link}&title=${title}`;
+  const whatsapp = document.querySelector('.whatsapp');
+  whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+</script>
 {% block comments %}
 						<div class="comments-list-wrap">
 							<h3 class="comment-count-title">3 Comments</h3>
 							<div class="comment-list">
 								<div class="single-comment-body">
 									<div class="comment-user-avater">
-										<img src="{{ article.imageArticle }}" alt="">
+										<img src="assets/img/avaters/avatar1.png" alt="">
 									</div>
 									<div class="comment-text-body">
 										<h4>Jenny Joe <span class="comment-date">Aprl 26, 2020</span> <a href="#">reply</a></h4>
@@ -71,11 +142,14 @@
 								</p>
 								<p><textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your Message"></textarea></p>
 								<p><input type="submit" value="Submit"></p>
+<a href="{{ path('app_commentaire_index') }}" class="btn" style="background-color: #F28123; color: #051922; font-weight: 700; text-transform: uppercase; font-size: 15px; border: none !important; cursor: pointer; padding: 15px 25px; border-radius: 50px; transition: all 0.3s ease;">Comment Index</a>
 							</form>
 						</div>
 					</div>
 				</div>
 				{% endblock %}
+
+{% block sidebar %}
 				<div class="col-lg-4">
 					<div class="sidebar-section">
 						<div class="recent-posts">
@@ -115,6 +189,7 @@
 		</div>
 	</div>
 	<!-- end single article section -->
+	{% endblock %}
 
 	<!-- logo carousel -->
 	<div class="logo-carousel-section">
@@ -196,8 +271,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-12">
-					<p>Copyrights &copy; 2019 - <a href="https://imransdesign.com/">Imran Hossain</a>,  All Rights Reserved.<br>
-						Distributed By - <a href="https://themewagon.com/">Themewagon</a>
+					<p>Copyrights &copy; 2019 - <a href="https://imransdesign.com/">maryouma</a>,  All Rights Reserved.<br>
+						Distributed By - <a href="https://themewagon.com/">RunTime Error</a>
 					</p>
 				</div>
 				<div class="col-lg-6 text-right col-md-12">
@@ -236,6 +311,7 @@
 	<script src="assets/js/sticker.js"></script>
 	<!-- main js -->
 	<script src="assets/js/main.js"></script>
+
 
 
 

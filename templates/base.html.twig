@@ -79,6 +79,9 @@
 										<li><a href="index.html">Static Home</a></li>
 										<li><a href="index_2.html">Slider Home</a></li>
 									</ul>
+									{# <a href="{{ path('app_reservations_new', {'idEvent': event.idEvent}) }}" class="btn btn-warning">Create Reservation</a> 
+    <div class="d-flex justify-content-between">
+    <a href="{{ path('app_back_reservations') }}" class="btn btn-secondary">Reservation</a> #}
 								</li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="#">Pages</a>
@@ -88,13 +91,13 @@
 										<li><a href="cart.html">Cart</a></li>
 										<li><a href="checkout.html">Check Out</a></li>
 										<li><a href="contact.html">Contact</a></li>
-										<li><a href="news.html">News</a></li>
+										<li><a href="{{ path('app_article_index') }}">News</a></li>
 										<li><a href="shop.html">Shop</a></li>
 									</ul>
 								</li>
-								<li><a href="{{path('app_article_index')}}">News</a>
+								<li><a href="{{ path('app_article_index') }}">News</a></li>
 									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
+                                        <li><a href="{{ path('app_article_index') }}">News</a></li>
 										<li><a href="single-news.html">Single News</a></li>
 									</ul>
 								</li>
@@ -161,7 +164,7 @@
 							<li><a href="index.html">Home</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="services.html">Shop</a></li>
-							<li><a href="news.html">News</a></li>
+							<li><a href="{{ path('app_article_index') }}">News</a></li>
 							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</div>

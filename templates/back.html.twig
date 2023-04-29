@@ -85,18 +85,19 @@
               <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
             </a>
 					</li>
+{% set current_path = app.request.attributes.get('_route') %}
+								<li class="sidebar-item {% if current_path == 'app_back_article' %} active{% endif %}">
+  <a class="sidebar-link" href="{{ path('app_back_article') }}">
+    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Blog</span>
+  </a>
+</li>
 
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="ui-typography.html">
-              <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Blog</span>
-            </a>
-					</li>
+				<li class="sidebar-item {% if current_path == 'app_back_commentaire' %} active{% endif %}">
+  <a class="sidebar-link" href="{{ path('app_back_commentaire') }}">
+    <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Article Comments</span>
+  </a>
+</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="icons-feather.html">
-              <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
-            </a>
-					</li>
 
 					<li class="sidebar-header">
 						Plugins & Addons
@@ -282,6 +283,7 @@
 					</ul>
 				</div>
 			</nav>
+			<script src="js/app.js"></script>
             
         {% endblock %}
 

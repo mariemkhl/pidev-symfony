@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Create new Commentaire</h1>
 
-    {{ include('commentaire/_form.html.twig') }}
+    {{ include('article/app_article_show') }}
 
-    <a href="{{ path('app_commentaire_index') }}">back to list</a>
+    <a href="{{ path('app_article_show') }}">back to list</a>
 {% endblock %}

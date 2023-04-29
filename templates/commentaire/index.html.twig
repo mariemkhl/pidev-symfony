@@ -21,10 +21,7 @@
                 <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
 
                 <p>{{ commentaire.contentCommentaire }}</p>
-                {# <div class="comment-actions">
-                    <a href="{{ path('app_commentaire_show', {'idCommentaire': commentaire.idCommentaire}) }}" class="btn btn-sm btn-primary">Show</a>
-                    <a href="{{ path('app_commentaire_edit', {'idCommentaire': commentaire.idCommentaire}) }}" class="btn btn-sm btn-secondary">Edit</a>
-                </div> #}
+                
             </div>
         </div>
         <div class="single-comment-body child">
@@ -34,7 +31,7 @@
             <div class="comment-text-body">
                 <h6>Your Name <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
 </h6>
-                <form action="{{ path('app_commentaire_reply', {'idCommentaire': commentaire.idCommentaire}) }}" method="POST">
+                <form action="{{ path('app_commentaire_index', {'idCommentaire': commentaire.idCommentaire}) }}" method="POST">
                     <div class="form-group">
                         <textarea name="contentCommentaire" class="form-control" placeholder="Reply to this comment"></textarea>
                     </div>

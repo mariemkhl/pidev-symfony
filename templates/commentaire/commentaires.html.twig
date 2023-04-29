@@ -1,0 +1,26 @@
+<section>
+    {% for com in commentaires %}
+        <div class="container mb-2">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+                    <div class="card card-row shadow-light-lg">
+                        <div class="row gx-0">
+                            <!-- Body -->
+                            <div class="card-body">
+                                <blockquote class="mb-0 text-center">
+                                    <!-- Text -->
+                                    <p>{{ com.contentCommentaire }}</p>
+                                    <!-- Footer -->
+                                    <footer class="blockquote-footer">
+                                        <span class="h6 text-uppercase">Par {{ com.idUser }} le <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
+</span>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</section>

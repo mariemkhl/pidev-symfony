@@ -9,9 +9,9 @@ class FacebookService
 
     public function __construct()
     {
-        $appId = '106824712245974_184074527851418';
-        $appSecret = '5f53c85869443487fd9414db1a4412b0';
-        $accessToken = 'EAAO7HzlB0fsBAJkyQ3swB6G6YrajswxfmMau3PnjmRX0t9V9Ay9VfJwW4UXD2JX3oVBMbFMBMLUaP6goIZCbT21uDQejmYrRYGjhofngTJGdzDYp4wLE18fyZApW0f0ZCSgpH9v3ItnCmkejfUE5lY3Nu1Wb8NfQJlgzCjBo5whWHcwQyrk';
+        // $appId = '106824712245974_184074527851418';
+        // $appSecret = '5f53c85869443487fd9414db1a4412b0';
+        // $accessToken = 'EAAO7HzlB0fsBAJkyQ3swB6G6YrajswxfmMau3PnjmRX0t9V9Ay9VfJwW4UXD2JX3oVBMbFMBMLUaP6goIZCbT21uDQejmYrRYGjhofngTJGdzDYp4wLE18fyZApW0f0ZCSgpH9v3ItnCmkejfUE5lY3Nu1Wb8NfQJlgzCjBo5whWHcwQyrk';
 
         $this->fb = new Facebook([
             'app_id' => $appId,

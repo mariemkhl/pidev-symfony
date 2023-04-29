@@ -29,6 +29,25 @@ class CommentaireRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findCommentaires($value)
+{
+    $object = null;
+    if ($value instanceof Article) {
+        $object = 'article';
+    } else {
+        $object = 'idArticle';
+    }
+
+    return $this->createQueryBuilder('c')
+        ->andWhere('c.' . $object . ' = :val')
+        // ->andWhere('c.etatCommenataire = true')
+        ->setParameter('val', $value->getIdArticle())
+        ->orderBy('c.idArticle', "DESC")
+        ->getQuery()
+        ->getResult();
+}
+
+    
 
     public function remove(Commentaire $entity, bool $flush = false): void
     {

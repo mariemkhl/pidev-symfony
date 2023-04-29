@@ -6,17 +6,25 @@ use App\Entity\Commentaire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+// use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class CommentaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-           // ->add('idArticle')
-            ->add('contentCommentaire')
+           ->add('idArticle')
+            ->add('contentCommentaire', TextareaType::class)
             //->add('dateCommentaire')
             //->add('nbLikesCommentaire')
-           // ->add('etatCommentaire')
+            ->add('etatCommentaire', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Approve Comment',
+            ])
+            // ->add('save', SubmitType::class, [
+            //     'attr' => ['class' => 'save'],
+            // ])
            // ->add('idUser')
         ;
     }
