@@ -2,6 +2,20 @@
 
 
 {% block body %}
+{% block breadcrumb %}
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Blog</p>
+						<h1>Single Article</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
 <style>  
 
     .btn-primary {
@@ -104,7 +118,7 @@
 							<div class="comment-list">
 								<div class="single-comment-body">
 									<div class="comment-user-avater">
-										<img src="assets/img/avaters/avatar1.png" alt="">
+										{# <img src="assets/img/avaters/avatar1.png" alt=""> #}
 									</div>
 									<div class="comment-text-body">
 										<h4>Jenny Joe <span class="comment-date">Aprl 26, 2020</span> <a href="#">reply</a></h4>
@@ -112,7 +126,7 @@
 									</div>
 									<div class="single-comment-body child">
 										<div class="comment-user-avater">
-											<img src="assets/img/avaters/avatar3.png" alt="">
+											{# <img src="assets/img/avaters/avatar3.png" alt=""> #}
 										</div>
 										<div class="comment-text-body">
 											<h4>Simon Soe <span class="comment-date">Aprl 27, 2020</span> <a href="#">reply</a></h4>
@@ -122,7 +136,7 @@
 								</div>
 								<div class="single-comment-body">
 									<div class="comment-user-avater">
-										<img src="assets/img/avaters/avatar2.png" alt="">
+										{# <img src="assets/img/avaters/avatar2.png" alt=""> #}
 									</div>
 									<div class="comment-text-body">
 										<h4>Addy Aoe <span class="comment-date">May 12, 2020</span> <a href="#">reply</a></h4>
@@ -190,7 +204,7 @@
 	</div>
 	<!-- end single article section -->
 	{% endblock %}
-
+{# {% block logo %}
 	<!-- logo carousel -->
 	<div class="logo-carousel-section">
 		<div class="container">
@@ -218,6 +232,7 @@
 		</div>
 	</div>
 	<!-- end logo carousel -->
+	{% endblock %} #}
 
 	<!-- footer -->
 	<div class="footer-area">
@@ -291,7 +306,7 @@
 	</div>
 	<!-- end copyright -->
 	
-	<!-- jquery -->
+	{# <!-- jquery -->
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 	<!-- bootstrap -->
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -310,7 +325,7 @@
 	<!-- sticker js -->
 	<script src="assets/js/sticker.js"></script>
 	<!-- main js -->
-	<script src="assets/js/main.js"></script>
+	<script src="assets/js/main.js"></script> #}
 
 
 

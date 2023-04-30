@@ -3,7 +3,22 @@
 
 {% block title %}Commentaire index{% endblock %}
 
+
 {% block body %}
+{% block breadcrumb %}
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Blog</p>
+						<h1>View Comments</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
 <style>
 
 
@@ -14,9 +29,9 @@
     <div class="comment-list">
         {% for commentaire in commentaires %}
         <div class="single-comment-body">
-            <div class="comment-user-avatar">
+            {# <div class="comment-user-avatar">
                 <img src="{{ asset('path/to/avatar1.png') }}" alt="">
-            </div>
+            </div> #}
             <div class="comment-text-body">
                 <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
 
@@ -25,9 +40,9 @@
             </div>
         </div>
         <div class="single-comment-body child">
-            <div class="comment-user-avatar">
+            {# <div class="comment-user-avatar">
                 <img src="{{ asset('path/to/avatar.png') }}" alt="User Avatar">
-            </div>
+            </div> #}
             <div class="comment-text-body">
                 <h6>Your Name <span class="date"><i class="fas fa-calendar"></i> {{ commentaire.dateCommentaire|date('Y-m-d') }} </span>
 </h6>

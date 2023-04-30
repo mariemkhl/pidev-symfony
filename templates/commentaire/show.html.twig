@@ -1,8 +1,23 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Commentaire{% endblock %}
 
 {% block body %}
+{% block breadcrumb %}
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Blog</p>
+						<h1>View</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
     <h1>Commentaire</h1>
 
     <table class="table">

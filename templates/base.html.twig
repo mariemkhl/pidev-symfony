@@ -40,20 +40,7 @@
 
 </head>
 
-{% block breadcrumb %}
-	<div class="breadcrumb-section breadcrumb-bg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="breadcrumb-text">
-						<p>Blog</p>
-						<h1>News Article</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endblock %}
+
 
 
 	{% block header%}
@@ -63,13 +50,13 @@
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 text-center">
 					<div class="main-menu-wrap">
-						<!-- logo -->
+						{# <!-- logo -->
 						<div class="site-logo">
 							<a href="index.html">
 								<img src="assets/img/logo.png" alt="">
 							</a>
 						</div>
-						<!-- logo -->
+						<!-- logo --> #}
 
 						<!-- menu start -->
 						<nav class="main-menu">
@@ -77,7 +64,7 @@
 								<li class="current-list-item"><a href="#">Home</a>
 									<ul class="sub-menu">
 										<li><a href="index.html">Static Home</a></li>
-										<li><a href="index_2.html">Slider Home</a></li>
+										<li><a href="{{ path('app_home_index') }}">Slider Home</a></li>
 									</ul>
 									{# <a href="{{ path('app_reservations_new', {'idEvent': event.idEvent}) }}" class="btn btn-warning">Create Reservation</a> 
     <div class="d-flex justify-content-between">

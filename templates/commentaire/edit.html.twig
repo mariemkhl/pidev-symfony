@@ -1,8 +1,23 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Edit Commentaire{% endblock %}
 
 {% block body %}
+{% block breadcrumb %}
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Blog</p>
+						<h1>Edit Comment</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
     <h1>Edit Commentaire</h1>
 
     {{ include('commentaire/_form.html.twig', {'button_label': 'Update'}) }}
