@@ -53,10 +53,13 @@ class ProductController extends AbstractController  implements EventSubscriberIn
 
 
     #[Route('/home', name: 'home')]
-    public function indexfront(): Response
+    public function indexfront(ProductRepository $productRepository): Response
     {
+        $products = $productRepository->findAll();
         return $this->render('product/homeFront.html.twig', [
             'controller_name' => 'homeController',
+            'products' => $products,
+
         ]);
     }
 
