@@ -168,7 +168,9 @@
 							<form action="index.html">
 								<input type="number" placeholder="0">
 							</form>
-							<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+							{# <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a> #}
+							{# <a href="cart.html?productId={{ product.id }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a> #}
+							<a href="{{ path('cart', { 'id': product.id }) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
 							<p><strong>Categories: </strong>{{ product.category.nom }}</p>
 						</div>
 

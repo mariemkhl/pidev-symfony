@@ -519,12 +519,25 @@ public function productListSorted( ProductRepository $productRepository): Respon
 
 
     #[Route('/cart.html ', name: 'cart')]
-    public function indexcart(): Response
+    public function indexcart(ProductRepository $productRepository,Request $request): Response
     {
-        return $this->render('product/cart.html.twig', [
-            'controller_name' => 'cartController',
+
+        $products = $productRepository->findAll();
+
+$productId = $request->query->get('id');
+
+$product = $productRepository->find($productId);
+
+return $this->render('product/cart.html.twig', [
+    'controller_name' => 'cartController',
+    'product' => $product, 
+    'products' => $products, 
+]);
+
+        // return $this->render('product/cart.html.twig', [
+        //     'controller_name' => 'cartController',
            
-        ]);
+        // ]);
     }
 
 
