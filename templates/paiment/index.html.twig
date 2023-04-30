@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiment index{% endblock %}
+
+{% block body %}
+    <h1>Paiment index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commande</th>
+                <th>NumCarte</th>
+                <th>NomCarte</th>
+                <th>DateEx</th>
+                <th>CvCode</th>
+                <th>PrixTot</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paiment in paiments %}
+            <tr>
+                <td>{{ paiment.commande }}</td>
+                <td>{{ paiment.numCarte }}</td>
+                <td>{{ paiment.nomCarte }}</td>
+                <td>{{ paiment.dateEx ? paiment.dateEx|date('Y-m-d') : '' }}</td>
+                <td>{{ paiment.cvCode }}</td>
+                <td>{{ paiment.prixTot }}</td>
+                <td>
+                    <a href="{{ path('app_paiment_delete', {'id': paiment.id}) }}">delete</a>
+                    <a href="{{ path('app_paiment_edit', {'id': paiment.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paiment_new') }}">Create new</a>
+{% endblock %}

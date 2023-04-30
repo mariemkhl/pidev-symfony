@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiment{% endblock %}
+
+{% block body %}
+    <h1>Paiment</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Commande</th>
+                <td>{{ paiment.commande }}</td>
+            </tr>
+            <tr>
+                <th>NumCarte</th>
+                <td>{{ paiment.numCarte }}</td>
+            </tr>
+            <tr>
+                <th>NomCarte</th>
+                <td>{{ paiment.nomCarte }}</td>
+            </tr>
+            <tr>
+                <th>DateEx</th>
+                <td>{{ paiment.dateEx ? paiment.dateEx|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CvCode</th>
+                <td>{{ paiment.cvCode }}</td>
+            </tr>
+            <tr>
+                <th>PrixTot</th>
+                <td>{{ paiment.prixTot }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paiment_index') }}">back to list</a>
+
+    <a href="{{ path('app_paiment_edit', {'id': paiment.id}) }}">edit</a>
+
+    {{ include('paiment/_delete_form.html.twig') }}
+{% endblock %}
