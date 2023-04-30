@@ -50,7 +50,7 @@ class EventsController extends AbstractController
                 $utilisateur = new Utilisateur();
 
                 $utilisateur->setIduser(1);
-$event->setIdUser($utilisateur);
+                $event->setIdUser($utilisateur);
               
             $imgFile = $form->get('img')->getData();
             if ($imgFile) {

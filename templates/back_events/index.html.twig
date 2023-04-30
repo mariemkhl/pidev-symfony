@@ -8,6 +8,7 @@
   object-fit: cover; 
 }
 
+
 </style>
  <input type="text" id="search" class="form-control" placeholder="Search">
     <main class="content">
@@ -32,9 +33,12 @@
                                 <td>  <img src="{{asset('images/events/' ~ event.img )}}" class="event-image img-fluid" alt="{{ event.nameev }}"></td>
                                 <td>{{ event.nameev }}</td>
                                 <td>{{ event.description }}</td>
+                                
                                 <td>
-                                    
-                                    <a href="{{ path('app_events_editback', {'idEvent': event.idEvent}) }}" class="btn btn-secondary btn-sm btn-block">Edit </a>
+                    {{ include('back_events/deleteback.html.twig') }}
+                                </td>
+                                <td>
+                               <a href="{{ path('app_events_editback', {'idEvent': event.idEvent}) }}" class="btn btn-secondary">Edit </a>
 
                                 </td>
                             </tr>
@@ -50,7 +54,9 @@
 <div class="d-flex justify-content-between">
 
   
-    <a href="{{ path('app_events_newback') }}" class="btn btn-primary">New Events</a>
+    <a href="{{ path('app_events_newback') }}" class="btn btn-secondary">New Events</a>
+    <a href="{{ path('app_back_reservations') }}" class="btn btn-secondary">Reservation</a>
+
 </div>
  <div class=' pagination page-item page-link'>
 									{{ knp_pagination_render(pagination) }}

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Events;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,13 +23,22 @@ class Reservations
      */
     private $idRes;
 
-    #[ORM\ManyToOne(inversedBy: 'reservation')]
-    
-    private ?Events $idEvent = null;
+  
 
-    #[ORM\ManyToOne(inversedBy: 'reservation')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $idUser = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_event", type="integer",  nullable=false)
+     */
+    private $idEvent=0;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Id_user", type="integer",  nullable=false)
+     */
+    private $idUser=0;
 
 
     /**
@@ -44,31 +53,35 @@ class Reservations
      *
      * @ORM\Column(name="dateRE", type="date", nullable=false)
      */
+
     private $datere;
+
 
     public function getIdRes(): ?int
     {
         return $this->idRes;
     }
 
-    public function getIdEvent(): ?Events
-    {
-        return $this->idEvent;
-    }
+    
+    public function getIdEvent(): ?int
+     {
+         return $this->idEvent;
+     }
+ 
+     public function setIdEvent(?int $idEvent): self
+     {
+         $this->idEvent = $idEvent;
+ 
+         return $this;
+     }
 
-    public function setIdEvent(?Events $idEvent): self
-    {
-        $this->idEvent = $idEvent;
 
-        return $this;
-    }
-
-    public function getIdUser(): ?Utilisateur
+    public function getIdUser(): ?int
     {
         return $this->idUser;
     }
 
-    public function setIdUser(?Utilisateur $idUser): self
+    public function setIdUser(?int $idUser): self
     {
         $this->idUser = $idUser;
 

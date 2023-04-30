@@ -49,7 +49,7 @@ class Events
     /**
      * @var int
      *
-     * @ORM\Column(name="id_user", type="integer", nullable=false)
+     * @ORM\Column(name="Id_user", type="integer", nullable=false)
      */
     private $iduser;
 
@@ -88,21 +88,11 @@ class Events
     private ?Utilisateur $idUser = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'idEvent', targetEntity: Reservations::class)]
-    private Collection $reservation;
+    
 
-    public function __construct()
-    {
-        $this->reservation = new ArrayCollection();
-    }
+   
 
-/**
-     * @return Collection<int, Reservations>
-     */
- public function getReservation(): Collection
-    {
-        return $this->reservation;
-    }
+
 
 
     public function getIdEvent(): ?int

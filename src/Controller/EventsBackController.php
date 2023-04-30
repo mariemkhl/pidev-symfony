@@ -95,6 +95,17 @@ if ($imgFile) {
         ]);
     }
 
+    #[Route('/{idEvent}', name: 'app_events_deleteback', methods: ['POST'])]
+    public function delete(Request $request, Events $event, EventsRepository $eventsRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$event->getIdEvent(), $request->request->get('_token'))) {
+            $eventsRepository->remove($event, true);
+        }
+
+        return $this->redirectToRoute('app_back_events', [], Response::HTTP_SEE_OTHER);
+    }
+   
+
     #[Route('/searchEvenement', name: 'searchEvenement')]
     public function searchEvenementx(Request $request, NormalizerInterface $Normalizer, EventsRepository $sr)
     {

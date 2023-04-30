@@ -54,13 +54,7 @@ class BackEventsType extends AbstractType
                 ],
             ])
 
-            ->add('idUser', EntityType::class,[
-                'class'=>Utilisateur::class,
-                'choice_label'=>'username',
-                'expanded'=>false,
-                'multiple'=> false , 
-                'placeholder'=>'choose an option '
-            ])
+            ->add('idUser')
             ->add('categorie' , TextType::class, [
                 'label' => 'Category',
                 'required' => true,

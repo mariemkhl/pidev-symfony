@@ -2,19 +2,17 @@
 
 {% block body %}
 
-
-</style>
  <input type="text" id="search" class="form-control" placeholder="Search">
     <main class="content">
         <div class="container-fluid p-0">
-            <h1>Events</h1>
+            <h1>Reservations</h1>
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Nme</th>
                             <th scope="col">Event</th>
                             <th scope="col">User</th>
                             <th scope="col"></th>
@@ -23,14 +21,14 @@
                     <tbody>
                         {% for reservation in pagination %}
                             <tr>
-                                <td>{{ reservation.idERes }}</td>
+                                <td>{{ reservation.idRes }}</td>
                                 <td>{{ reservation.name }}</td>
-                                <td>{{reservation.idUser}}
                                 <td>{{ reservation.idEvent }}</td>
+                                <td>{{ reservation.idUser }}</td>
+                             
+                                
                                 <td>
-                                    
-                                    <a href="{{ path('app_reservations_editback', {'idRes': reservation.idRes}) }}" class="btn btn-secondary btn-sm btn-block">Edit </a>
-
+                    <a href="{{ path('app_reservations_deleteback', {'idRes': reservation.idRes}) }}" class="btn btn-secondary btn-sm btn-block" on>Delete</a>
                                 </td>
                             </tr>
                         {% else %}
@@ -42,10 +40,7 @@
                 </table>
             </div>
             
-<div class="d-flex justify-content-between">
 
-  
-    <a href="{{ path('app_reservations_newback') }}" class="btn btn-primary">New Events</a>
 </div>
  <div class=' pagination page-item page-link'>
 									{{ knp_pagination_render(pagination) }}

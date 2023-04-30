@@ -24,13 +24,7 @@ class ReservationsType extends AbstractType
             'multiple'=>false , 
             'placeholder'=>'choose an option '
         ])
-        ->add('idUser', EntityType::class,[
-            'class'=>Utilisateur::class,
-            'choice_label'=>'username',
-            'expanded'=>false,
-            'multiple'=> false , 
-            'placeholder'=>'choose an option '
-        ])
+        ->add('idUser')
             ->add('name')
             ->add('datere')
 
