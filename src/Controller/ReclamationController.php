@@ -84,7 +84,7 @@ class ReclamationController extends AbstractController
             if ($request->isMethod('POST') && $request->request->get('user')) {
                 // Create a new instance of the Twilio client
                 $accountSid = 'ACe8e0b1a487f1f33d73e1e603879ed810';
-                $authToken = '24df17038f305caa769635881ce2bc35';
+                $authToken = '56070a2e2f3eaeff6c038e1523846add';
                 $client = new Client($accountSid, $authToken);
     
                 // Send an SMS message
@@ -97,9 +97,7 @@ class ReclamationController extends AbstractController
                 );
     
                 // Return a JSON response
-                return $this->json([
-                    'message' => 'SMS sent successfully!'
-                ]);
+                return $this->redirectToRoute('addreclamation', [], Response::HTTP_SEE_OTHER);
             }
     
             // Render the form
