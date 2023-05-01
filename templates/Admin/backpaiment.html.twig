@@ -292,7 +292,7 @@
 <main class="content">
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3"><strong>Les paiements</strong> par carte</h1>
-       
+         <input type="text" id="search" class="form-control" placeholder="Search">
         <table class="table">
             <thead>
                 <tr>
@@ -589,7 +589,17 @@
 			});
 		});
 	</script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 
 </html>

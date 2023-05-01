@@ -8,10 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Twilio\Rest\Client;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -79,17 +77,34 @@ class ReclamationController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/conf', name: 'confirmation', methods: ['GET'])]
-    public function conf(EntityManagerInterface $entityManager): Response
+    #[Route('/conf', name: 'confirmation', methods: ['GET', 'POST'])]
+    public function conf(Request $request): Response
     {
-        $reclamations = $entityManager
-            ->getRepository(Reclamation::class)
-            ->findAll();
-
-        return $this->render('reclamation/confirmation.html.twig', [
-            'reclamations' => $reclamations,
-        ]);
-    }
+            // Check if the form has been submitted and is valid
+            if ($request->isMethod('POST') && $request->request->get('user')) {
+                // Create a new instance of the Twilio client
+                $accountSid = 'ACe8e0b1a487f1f33d73e1e603879ed810';
+                $authToken = '24df17038f305caa769635881ce2bc35';
+                $client = new Client($accountSid, $authToken);
+    
+                // Send an SMS message
+                $message = $client->messages->create(
+                    '+21654057529', // replace with admin's phone number
+                    [
+                        'from' => '+15672922795', // replace with your Twilio phone number
+                        'body' => 'Votre réclamation a été bien ajoutée. Merci pour votre patiente. L"équipe artisty! ' . $request->request->get('user'),
+                    ]
+                );
+    
+                // Return a JSON response
+                return $this->json([
+                    'message' => 'SMS sent successfully!'
+                ]);
+            }
+    
+            // Render the form
+            return $this->render('reclamation/confirmation.html.twig');
+        }
 
     
 }   

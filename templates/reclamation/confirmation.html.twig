@@ -156,9 +156,27 @@
 	        <div class="form-title">
 	          <div style="text-align: center;">
                  <h2>Vous serez contacté par notre équipe ! Merci pour votre patience</h2>
-				<img src="{{asset('assets/img/tick.jpeg')}}" alt="">
-              </div>
-	        </div>
+				 </div>
+				 </div>
+				  <p>Voulez vous recevoir une confirmation par message ?</p>
+
+    {% if message is defined %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ path('confirmation') }}">
+        <div class="form-group">
+            <label for="user">User:</label>
+            <input type="text" id="user" name="user" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="tel" id="phone_number" name="phone_number" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Send SMS</button>
+    </form>
+  
 	        <div id="form_status"></div>
 	        </div>
 	      </div>

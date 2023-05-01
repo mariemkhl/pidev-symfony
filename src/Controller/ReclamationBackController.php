@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Form\Reclamation1Type;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 #[Route('/recadmin')]
 
@@ -62,36 +64,15 @@ public function adminReclamation(EntityManagerInterface $entityManager): Respons
         return $this->redirectToRoute('admin_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
     
-
-    private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
+   #[Route('/searchreclamation', name: 'searchreclamation')]
+    public function searchreclamationx(Request $request, NormalizerInterface $Normalizer, ManagerRegistry $registry)
     {
-        $this->entityManager = $entityManager;
+        $repository = $registry->getManager()->getRepository(Reclamation::class);
+        $requestString = $request->get('searchValue');
+        $Reclamations = $repository->findBy(['numero' => $requestString]);
+        $jsonContent = $Normalizer->normalize($Reclamations, 'json', ['groups' => 'Reclamation']);
+        $retour = json_encode($jsonContent);
+        return new Response($retour);
     }
-    #[Route("/recherche", name: "reclamation_recherche", methods: ["POST"])]
-    public function recherche(Request $request): Response
-    {
-    $reclamation = new Reclamation();
-    $form = $this->createForm(Reclamation1Type::class, $reclamation);
-    
-    $form->handleRequest($request);
-    
-    $reclamations = []; // define an empty array for reclamations
-    
-    if ($form->isSubmitted() && $form->isValid()) {
-        $typereclamation = $reclamation->getTypereclamation();
-    
-        $repository = $this->entityManager->getRepository(Reclamation::class);
-        $reclamations = $repository->findBy(['typereclamation' => $typereclamation]);
-        var_dump($reclamations);
-
-    }
-    
-    return $this->render('admin/backreclamation.html.twig', [
-        'form' => $form->createView(),
-        'reclamations' => $reclamations, // pass reclamations to the Twig template
-    ]);
-    }
-    
 
 }

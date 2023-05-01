@@ -38,7 +38,7 @@ class CommandeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findBypayment($payment)
+    public function findByPayment($payment)
     {
         return $this->createQueryBuilder('commande')
             ->where('commande.payment LIKE  :payment')

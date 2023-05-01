@@ -39,6 +39,15 @@ class PaimentRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBynumCarte($numCarte)
+    {
+        return $this->createQueryBuilder('paiment')
+            ->where('paiment.numCarte LIKE  :numCarte')
+            ->setParameter('numCarte', '%'.$numCarte. '%')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Paiment[] Returns an array of Paiment objects
 //     */

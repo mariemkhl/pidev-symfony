@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Paiment;
 use App\Form\Paiment1Type;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 #[Route('/padmin')]
 
@@ -69,27 +71,16 @@ class PaimentBackController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route("/recherche", name: "paiment_recherche", methods: ["POST"])]
-public function recherche(Request $request): Response
-{
-    $paiment = new Paiment();
-    $form = $this->createForm(Paiment1Type::class, $paiment);
-
-    $form->handleRequest($request);
-
-    $paiments = []; // define an empty array for paiments
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $numCarte = $paiment->getNumCarte();
-
-        $repository = $this->entityManager->getRepository(Paiment::class);
-        $paiments = $repository->findBy(['numCarte' => $numCarte]);
+    #[Route('/searchpaiment', name: 'searchpaiment')]
+    public function searchpaimentx(Request $request, NormalizerInterface $Normalizer, ManagerRegistry $registry)
+    {
+        $repository = $registry->getManager()->getRepository(Paiment::class);
+        $requestString = $request->get('searchValue');
+        $Paiments = $repository->findBy(['numCarte' => $requestString]);
+        $jsonContent = $Normalizer->normalize($Paiments, 'json', ['groups' => 'Paiment']);
+        $retour = json_encode($jsonContent);
+        return new Response($retour);
     }
-
-    return $this->render('admin/backpaiment.html.twig', [
-        'form' => $form->createView(),
-        'paiments' => $paiments, // pass paiments to the Twig template
-    ]);
-}
+    
 
 }

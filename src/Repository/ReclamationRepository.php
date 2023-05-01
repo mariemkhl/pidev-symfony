@@ -39,6 +39,15 @@ class ReclamationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBynumero($numero)
+    {
+        return $this->createQueryBuilder('numero')
+            ->where('reclamation.numero LIKE  :numero')
+            ->setParameter('numero', '%'.$numero. '%')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Reclamation[] Returns an array of Reclamation objects
 //     */
