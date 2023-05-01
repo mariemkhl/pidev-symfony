@@ -83,9 +83,9 @@ class ReclamationController extends AbstractController
             // Check if the form has been submitted and is valid
             if ($request->isMethod('POST') && $request->request->get('user')) {
                 // Create a new instance of the Twilio client
-                $accountSid = 'ACe8e0b1a487f1f33d73e1e603879ed810';
-                $authToken = '56070a2e2f3eaeff6c038e1523846add';
-                $client = new Client($accountSid, $authToken);
+              #  $accountSid = 'ACe8e0b1a487f1f33d73e1e603879ed810';
+              #  $authToken = '56070a2e2f3eaeff6c038e1523846add';
+              #  $client = new Client($accountSid, $authToken);
     
                 // Send an SMS message
                 $message = $client->messages->create(
