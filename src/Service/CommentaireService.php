@@ -19,9 +19,12 @@ class CommentaireService
         $this->flash = $flash;
     }
 
-    public function persistCommentaire(Commentaire $commentaire, Article $article = null): void
-    {
-        $commentaire->setIsPublished(false)
+    public function persistCommentaire(
+        Commentaire $commentaire,
+         Article $article = null
+         ): void {
+
+        $commentaire->setEtatCommentaire(false)
             ->setArticle($article)
             ->setDateCommentaire(new DateTime('now'));
             

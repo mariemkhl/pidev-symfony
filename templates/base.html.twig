@@ -41,34 +41,68 @@
 </head>
 
 
+<style>
+{# .mouse-icon {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    background: #82ae46;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+} #}
+</style>
 
-
-	{% block header%}
+	{% block header%}  
 	<!-- header -->
 	<div class="top-header-area" id="sticker">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 text-center">
 					<div class="main-menu-wrap">
-						{# <!-- logo -->
+						<!-- logo -->
 						<div class="site-logo">
 							<a href="index.html">
-								<img src="assets/img/logo.png" alt="">
+								<img src="assets/img/favicon.jpg" alt="">
 							</a>
 						</div>
-						<!-- logo --> #}
+						<!-- logo -->
 
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="#">Home</a>
+						        <li class="current-list-item"><a href="#">Translate</a>
+									<ul class="sub-menu">
+										<li>	<div id="google_translate_element"></div>
+                                     <script type="text/javascript">
+		 
+                                         function googleTranslateElementInit() {
+                                          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                                        }
+                                     </script>
+
+                                     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        
+                                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script></li>
+										
+									</ul>
+									
+								<li ><a href="#">Home</a>
 									<ul class="sub-menu">
 										<li><a href="index.html">Static Home</a></li>
 										<li><a href="{{ path('app_home_index') }}">Slider Home</a></li>
 									</ul>
-									{# <a href="{{ path('app_reservations_new', {'idEvent': event.idEvent}) }}" class="btn btn-warning">Create Reservation</a> 
-    <div class="d-flex justify-content-between">
-    <a href="{{ path('app_back_reservations') }}" class="btn btn-secondary">Reservation</a> #}
+				
 								</li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="#">Pages</a>
@@ -115,6 +149,7 @@
 	</div>
 	<!-- end header -->
     {%endblock%}
+{# <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> #}
 
     {% block body%}
 	
@@ -124,6 +159,70 @@
 
 
  {% block footer%}
+ {# <div class="container text-center">
+  <div class="row">
+    <div class="mouse">
+      <a href="#" class="mouse-icon text-orange">
+        <div class="mouse-wheel">
+          <span class="ion-ios-arrow-up"></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+.mouse-icon {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: orange;
+  cursor: pointer;
+  position: relative;
+  text-align: right;
+  margin: 30 auto;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+.mouse-icon:hover {
+  transform: translateY(-10px);
+}
+.mouse-wheel {
+    height: 30px;
+    margin: 2px auto 0;
+    display: block;
+    width: 30px;
+    background: transparent;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-animation: 1.6s ease infinite wheel-up-down;
+    -moz-animation: 1.6s ease infinite wheel-up-down;
+    animation: 1.6s ease infinite wheel-up-down;
+    color: #fff;
+    font-size: 20px;
+}
+
+
+.ion-ios-arrow-up {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+</style> #}
+
+
+
 	<!-- footer -->
 	<div class="footer-area">
 		<div class="container">
