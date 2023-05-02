@@ -1,0 +1,28 @@
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Nom</th>
+            <th>IsActive</th>
+            <th>Tel</th>
+            <th>Domaine</th>
+            <th>Adresse</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.Nom }}</td>
+
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.NumTel }}</td>
+                <th>{{ user.domaine }}</th>
+                <td>{{ user.Adresse }}</td>
+
+            </tr>
+        {% endfor%}
+        </tbody>
+    </table>
+

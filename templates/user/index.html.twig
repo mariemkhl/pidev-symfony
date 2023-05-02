@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#rech tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <h1>User index <a class="btn btn-danger" href="{{ path('app_pdf') }}">Pdf</a></h1>
+
+    <input class="form-control" id="myInput" type="text" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>IsActive</th>
+                <th>Tel</th>
+                <th>Domaine</th>
+                <th>Adresse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody id="rech">
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.Nom }}</td>
+
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.NumTel }}</td>
+                <th>{{ user.domaine }}</th>
+                <td>{{ user.Adresse }}</td>
+                <td>
+                    {% if user.isActive %}
+                    <a class="btn btn-danger" href="{{ path('app_user_bloquer', {'id': user.id}) }}">Blocker</a>
+
+                    {% else %}
+                    <a class="btn btn-primary" href="{{ path('app_user_debloquer', {'id': user.id}) }}">Deblocker</a>
+                        {% endif %}
+
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="{{ path('delete', {'id': user.id}) }}">Delete</a>
+                </td>
+            </tr>
+           {% endfor%}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(users) }}
+
+{% endblock %}
